@@ -1,0 +1,2 @@
+ruby:
+  confi_file: .rubocop.yml
