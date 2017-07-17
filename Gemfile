@@ -12,13 +12,16 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+gem 'foundation-rails'
+
 group :development, :test do
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'launchy', require: false
+  gem 'launchy'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.5'
   gem 'shoulda'
+  gem 'shoulda-matchers', require: false
   gem 'valid_attribute'
 end
 
