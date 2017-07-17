@@ -1,2 +1,5 @@
 ruby:
   confi_file: .rubocop.yml
+
+config_file:
+  .jshintrc
