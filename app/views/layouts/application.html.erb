@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
     <title>Revolver</title>
+    <meta charset="utf-8" />
     <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag "vendor/modernizr" %>
   </head>
 
   <body>
-    <nav>
-      <%= link_to "Sign Up", new_user_registration_path %>
-    </nav>
+
+    <div class="top-bar" role='navigation'>
+      <ul class='title-area'>
+        <li class='name'>
+          <h1><%= link_to "Revolver", root_path %></h1>
+        </li>
+      </ul>
+      <section>
+        <ul class='right'>
+          <li class='active'>
+            <%= link_to "Sign Up", new_user_registration_path, class: 'button' %>
+          </li>
+        </ul>
+      </section>
+    </div>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
+    <%= javascript_include_tag 'application' %>
   </body>
 </html>
