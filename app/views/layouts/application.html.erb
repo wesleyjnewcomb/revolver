@@ -1,23 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
     <title>Revolver</title>
+    <meta charset="utf-8" />
     <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag "vendor/modernizr" %>
     <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <nav>
-      <% if current_user %>
-        <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-        <%= current_user.username %>
-      <% else %>
-        <%= link_to "Sign Up", new_user_registration_path %>
-        <%= link_to "Log in", new_user_session_path %>
-      <% end %>
-    </nav>
+
+    <div class="top-bar" role='navigation'>
+      <ul class='title-area'>
+        <li class='name'>
+          <h1><%= link_to "Revolver", root_path %></h1>
+        </li>
+      </ul>
+      <section>
+        <ul class='right'>
+          <li class='active'>
+            <% if current_user %>
+              <%= current_user.username %>
+              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'button' %>
+            <% else %>
+              <%= link_to "Sign Up", new_user_registration_path, class: 'button' %>
+              <%= link_to "Log in", new_user_session_path, class: 'button' %>
+            <% end %>
+          </li>
+        </ul>
+      </section>
+    </div>
+
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
