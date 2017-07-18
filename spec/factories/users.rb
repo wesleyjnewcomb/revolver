@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    username "John"
-    email { "#{name}@example.com" }
-    last_signed_in { 10.days.ago }
+    username "hankhill"
+    email { "bob@example.com" }
     password "password"
   end
 end

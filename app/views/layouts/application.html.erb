@@ -10,7 +10,13 @@
 
   <body>
     <nav>
-      <%= link_to "Sign Up", new_user_registration_path %>
+      <% if current_user %>
+        <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+        <%= current_user.username %>
+      <% else %>
+        <%= link_to "Sign Up", new_user_registration_path %>
+        <%= link_to "Log in", new_user_session_path %>
+      <% end %>
     </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
