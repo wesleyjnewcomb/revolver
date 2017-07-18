@@ -15,7 +15,7 @@ feature 'User registration' do
     fill_in 'Username', with: 'TestUser'
     fill_in 'Email', with: 'TestUser@launch.com'
     fill_in 'Password', with: 'TestUserPassword'
-    fill_in 'Password confirmation', with: 'TestUserPassword'
+    fill_in 'Confirm Password', with: 'TestUserPassword'
 
     click_button 'Sign up'
 
@@ -39,7 +39,7 @@ feature 'User registration' do
 
     fill_in 'Email', with: 'Invalid_email'
     fill_in 'Password', with: 'TestUserPassword'
-    fill_in 'Password confirmation', with: 'TestUserPassword'
+    fill_in 'Confirm Password', with: 'TestUserPassword'
 
     click_button 'Sign up'
 
