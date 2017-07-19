@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :album do
     uploader_id { 1 }
-    title "junta"
+    title "Junta"
+    artist
   end
 end
