@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718144459) do
+ActiveRecord::Schema.define(version: 20170718200417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.bigint "uploader_id", null: false
+    t.string "title", null: false
+    t.date "date_released"
+    t.index ["uploader_id"], name: "index_albums_on_uploader_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

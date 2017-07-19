@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :albums, foreign_key: "uploader_id"
+
   validates :username,
     presence: true,
     length: { in: 3..20 },
