@@ -13,29 +13,43 @@
 
   <body>
 
-    <div class="top-bar" role='navigation'>
+    <nav class="top-bar" data-topbar role='navigation'>
       <ul class='title-area'>
         <li class='name'>
           <h1><%= link_to "Revolver", root_path %></h1>
         </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
       </ul>
-      <section>
+      <section class='top-bar-section'>
         <ul class='right'>
-          <li class='active'>
-            <% if current_user %>
-              <%= current_user.username %>
-              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'button' %>
+          <% if current_user %>
+            <li class='has-dropdown'>
+              <a href='#'>Signed in as <%= current_user.username %></a>
+              <ul class='dropdown'>
+                <li>
+                  <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+                </li>
+              </ul>
             <% else %>
               <%= link_to "Sign Up", new_user_registration_path, class: 'button' %>
               <%= link_to "Log in", new_user_session_path, class: 'button' %>
             <% end %>
           </li>
-        </ul>
+        </>
       </section>
-    </div>
-
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    </nav>
+    <% if notice %>
+      <div data-alert class="alert-box success">
+        <%= notice %>
+        <a href="#" class="close">&times;</a>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div data-alert class="alert-box alert">
+        <%= alert %>
+        <a href="#" class="close">&times;</a>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

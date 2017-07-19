@@ -3,8 +3,11 @@
     <h2>Create an account</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
-
+    <% if resource.errors.any? %>
+      <div class="panel">
+        <%= devise_error_messages! %>
+      </div>
+    <% end %>
     <div class="field">
       <%= f.text_field :username, autofocus: true, placeholder: 'Username' %>
     </div>
