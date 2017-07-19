@@ -3,7 +3,6 @@ require 'rails_helper'
 feature 'user logs in' do
   let(:bobby) { FactoryGirl.create(:user) }
   scenario 'user enters valid login credentials' do
-
     visit new_user_session_path
 
     fill_in 'Email', with: bobby.email
@@ -15,7 +14,6 @@ feature 'user logs in' do
   end
 
   scenario 'user enters valid login credentials and sees username in nav-bar' do
-
     visit new_user_session_path
 
     fill_in 'Email', with: bobby.email
