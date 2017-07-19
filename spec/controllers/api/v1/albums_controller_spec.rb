@@ -37,15 +37,30 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
   describe "POST#create" do
     let!(:jimmy) { FactoryGirl.create(:user, email: 'me@you.com') }
     let!(:new_album) { FactoryGirl.create(:album, title: 'Round Room', uploader: jimmy) }
+    let!(:invalid_album) { FactoryGirl.create(:album, uploader: jimmy) }
+    let!(:invalid_album_data) { {album: { uploader_id: jimmy.id} }}
     let!(:new_album_data) { {album: {title: new_album.title, uploader_id: new_album.uploader.id}} }
 
     it "should create a new album" do
-      # post '/api/v1/albums', params: { "title" => new_album.title, "uploader_id" => new_album.uploader.id  }
-      # binding.pry
-      # new_album_data
       expect{ post(:create, params: new_album_data) }.to change{ Album.count }.by 1
     end
 
+    it "should return a json with the new album data" do
+      post(:create, params: new_album_data)
+      returned_json = JSON.parse(response.body)
 
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq "application/json"
+      
+      expect(returned_json).to be_a(Hash)
+      expect(returned_json["title"]).to eq new_album.title
+      expect(returned_json["uploader_id"]).to eq jimmy.id
+    end
+
+    it "should not sucessfully post an album without a title" do
+      post(:create, params: invalid_album_data)
+      returned_json = JSON.parse(response.body)
+      expect(response.status).to eq 422
+    end
   end
 end
