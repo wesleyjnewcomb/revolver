@@ -13,21 +13,19 @@
 
   <body>
 
-    <div class="top-bar" role='navigation'>
+    <nav class="top-bar" data-topbar role='navigation'>
       <ul class='title-area'>
         <li class='name'>
           <h1><%= link_to "Revolver", root_path %></h1>
         </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
       </ul>
-      <section>
+      <section class='top-bar-section'>
         <ul class='right'>
-          <li class='active'>
-            <% if current_user %>
-              <button data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">
-                Signed in as <%= current_user.username %>
-              </button>
-              <% #Drop down broken %>
-              <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
+          <% if current_user %>
+            <li class='has-dropdown'>
+              <a href='#'>Signed in as <%= current_user.username %></a>
+              <ul class='dropdown'>
                 <li>
                   <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
                 </li>
@@ -39,7 +37,7 @@
           </li>
         </>
       </section>
-    </div>
+    </nav>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
