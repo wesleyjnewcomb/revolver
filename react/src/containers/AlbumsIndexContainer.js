@@ -33,7 +33,7 @@ class AlbumsIndexContainer extends React.Component {
         <AlbumTile key={album.id} album={album} />
       )
     });
-    return(
+    return (
       <div className='albums-index'>
         {albums}
       </div>
