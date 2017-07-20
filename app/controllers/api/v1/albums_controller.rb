@@ -1,6 +1,5 @@
 class Api::V1::AlbumsController < ApplicationController
   def index
-    # binding.pry
     render json: Album.all, adapter: :json
   end
 
@@ -18,7 +17,6 @@ class Api::V1::AlbumsController < ApplicationController
       created_artist = true
     end
     @new_album.artist = artist
-
     if @new_album.save
       render json: @new_album
     else
