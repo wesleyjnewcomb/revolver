@@ -7,9 +7,11 @@ class Api::V1::AlbumsController < ApplicationController
   def create
     @new_album = Album.new(album_params)
     @new_album.uploader = current_user
+
     if !artist_name_param
       return render json: { errors: 'Must include artist name' }, status: 422
     end
+
     artist = Artist.find_by(name: artist_name_param)
     if !artist
       artist = Artist.create(name: artist_name_param)

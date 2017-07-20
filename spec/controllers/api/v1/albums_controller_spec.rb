@@ -109,9 +109,21 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
 
     context 'request does not have correct data' do
       let!(:no_artist_album_data) { { album: { title: new_album.title } } }
-
-      it "should not sucessfully post an album without a title" do
+      let!(:no_title_album_data) do
+        {
+          album: {
+            artist_name: 'The Beatles',
+            title: ' ' 
+          }
+        }
+      end
+      it "should not sucessfully post an album without an artist name" do
         post(:create, params: no_artist_album_data)
+        expect(response.status).to eq 422
+      end
+
+      it 'should not successfully post an album without a title' do
+        post(:create, params: no_title_album_data)
         expect(response.status).to eq 422
       end
     end
