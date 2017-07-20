@@ -1,4 +1,4 @@
-import AlbumTile from '../src/components/AlbumTile'
+import AlbumTile from '../../src/components/AlbumTile'
 
 describe('AlbumTile', () => {
   let wrapper;
