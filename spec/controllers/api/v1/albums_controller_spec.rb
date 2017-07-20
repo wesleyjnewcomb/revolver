@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::AlbumsController, type: :controller do
 
-
   describe "GET#index" do
     before(:each) do
       @very_prolific = create(:artist)
@@ -15,7 +14,6 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     it "should return a list of albums with the correct length" do
       get :index
       returned_json = JSON.parse(response.body)
-
       expect(response.status).to eq 200
       expect(response.content_type).to eq "application/json"
 
@@ -26,26 +24,24 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     it "should return a list of with correct album data" do
       get :index
       returned_json = JSON.parse(response.body)
-
       expect(response.status).to eq 200
       expect(response.content_type).to eq "application/json"
       expect(returned_json.length).to eq 1
-      binding.pry
+
       expect(returned_json["albums"][0]["title"]).to eq "The White Album"
       expect(returned_json["albums"][4]["title"]).to eq "Dark Side of the Moon"
-      expect(returned_json["albums"][0]["artist"]).to eq @very_prolific
-      expect(returned_json["albums"][4]["artist"]).to eq @very_prolific
+      expect(returned_json["albums"][0]["artist_id"]).to eq @very_prolific.id
+      expect(returned_json["albums"][4]["artist_id"]).to eq @very_prolific.id
     end
   end
 
   describe "POST#create" do
+    before(:each) { @very_prolific = create(:artist) }
     let!(:jimmy) { FactoryGirl.create(:user, email: 'me@you.com') }
     let!(:new_album) { FactoryGirl.create(:album, title: 'Round Room', artist: @very_prolific, uploader: jimmy) }
-    let!(:new_album_data) { {album: {title: new_album.title, uploader_id: new_album.uploader.id}} }
+    let!(:new_album_data) { {album: {title: new_album.title, artist_id: @very_prolific.id, uploader_id: new_album.uploader.id}} }
     let!(:no_title_album) { FactoryGirl.create(:album, uploader: jimmy, artist: @very_prolific) }
-    let!(:no_title_album_data) { {album: { uploader_id: jimmy.id, artist: @very_prolific} }}
-    let!(:no_artist_album) { FactoryGirl.create(:album, uploader: jimmy, title: "the chronic 2001") }
-    let!(:no_artist_album_data) { {album: { uploader_id: jimmy.id, title: "the chronic 2001"} }}
+    let!(:no_title_album_data) { {album: { uploader_id: jimmy.id, artist_id: @very_prolific.id} }}
 
     it "should create a new album" do
       expect{ post(:create, params: new_album_data) }.to change{ Album.count }.by 1
@@ -66,12 +62,6 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
 
     it "should not sucessfully post an album without a title" do
       post(:create, params: no_title_album_data)
-      returned_json = JSON.parse(response.body)
-      expect(response.status).to eq 422
-    end
-
-    it "should not sucessfully post an album without an artist" do
-      post(:create, params: no_artist_album_data)
       returned_json = JSON.parse(response.body)
       expect(response.status).to eq 422
     end

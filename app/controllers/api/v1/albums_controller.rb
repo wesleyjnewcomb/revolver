@@ -1,5 +1,6 @@
 class Api::V1::AlbumsController < ApplicationController
   def index
+    # binding.pry
     render json: Album.all, adapter: :json
   end
 
@@ -15,6 +16,6 @@ class Api::V1::AlbumsController < ApplicationController
   private
 
   def album_params
-    params.require(:album).permit(:title, :uploader_id, :date_released)
+    params.require(:album).permit(:title, :artist_id, :uploader_id, :date_released)
   end
 end
