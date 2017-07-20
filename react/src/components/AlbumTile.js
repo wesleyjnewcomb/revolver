@@ -21,8 +21,8 @@ const AlbumTile = ({ album }) => {
   let year = dateReleased.getFullYear()
   return (
     <div className='album-tile panel row'>
-      <h3>{album.title}</h3>
-      <h4>{months[month]} {year}</h4>
+      <h3 className='left'>{album.title}</h3>
+      <h4 className='right secondary'>{months[month]} {year}</h4>
     </div>
   )
 }
