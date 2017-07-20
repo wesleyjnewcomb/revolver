@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AlbumsController, type: :controller do
-
   describe "GET#index" do
     before(:each) do
       @very_prolific = create(:artist)
@@ -36,34 +35,97 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
   end
 
   describe "POST#create" do
-    before(:each) { @very_prolific = create(:artist) }
-    let!(:jimmy) { FactoryGirl.create(:user, email: 'me@you.com') }
-    let!(:new_album) { FactoryGirl.create(:album, title: 'Round Room', artist: @very_prolific, uploader: jimmy) }
-    let!(:new_album_data) { {album: {title: new_album.title, artist_id: @very_prolific.id, uploader_id: new_album.uploader.id}} }
-    let!(:no_title_album) { FactoryGirl.create(:album, uploader: jimmy, artist: @very_prolific) }
-    let!(:no_title_album_data) { {album: { uploader_id: jimmy.id, artist_id: @very_prolific.id} }}
-
-    it "should create a new album" do
-      expect{ post(:create, params: new_album_data) }.to change{ Album.count }.by 1
+    before(:each) do
+      @very_prolific = FactoryGirl.create(:artist)
+      @user = FactoryGirl.create(:user)
+      sign_in @user
     end
 
-    it "should return a json with the new album data" do
-      post(:create, params: new_album_data)
-      returned_json = JSON.parse(response.body)
-
-      expect(response.status).to eq 200
-      expect(response.content_type).to eq "application/json"
-
-      expect(returned_json).to be_a(Hash)
-      expect(returned_json["title"]).to eq new_album.title
-      expect(returned_json["uploader_id"]).to eq jimmy.id
-      expect(returned_json["artist_id"]).to eq @very_prolific.id
+    let!(:new_album) do
+      FactoryGirl.create(:album,
+        title: 'Round Room',
+        artist: @very_prolific,
+        uploader: @user
+      )
     end
 
-    it "should not sucessfully post an album without a title" do
-      post(:create, params: no_title_album_data)
-      returned_json = JSON.parse(response.body)
-      expect(response.status).to eq 422
+    context 'artist exists in database' do
+      let!(:new_album_data) do
+        {
+          album: {
+            title: new_album.title,
+            artist_name: @very_prolific.name
+          }
+        }
+      end
+
+      it "should create a new album" do
+        expect{ post(:create, params: new_album_data) }.to change { Album.count }.by 1
+      end
+
+      it 'should return a json of the newly created album' do
+        post(:create, params: new_album_data)
+        returned_json = JSON.parse(response.body)
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq "application/json"
+
+        expect(returned_json).to be_a(Hash)
+        expect(returned_json["title"]).to eq new_album.title
+        expect(returned_json["uploader_id"]).to eq @user.id
+        expect(returned_json["artist_id"]).to eq @very_prolific.id
+      end
+    end
+
+    context 'artist does not exist in database' do
+      let!(:new_artist_album_data) do
+        {
+          album: {
+            title: new_album.title,
+            artist_name: 'Eric Clapton'
+          }
+        }
+      end
+
+      it "should create a new album" do
+        expect { post(:create, params: new_artist_album_data) }.to change { Album.count }.by 1
+      end
+
+      it 'should return a json of the newly created album' do
+        post(:create, params: new_artist_album_data)
+        returned_json = JSON.parse(response.body)
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq "application/json"
+
+        expect(returned_json).to be_a(Hash)
+        expect(returned_json["title"]).to eq new_album.title
+        expect(returned_json["uploader_id"]).to eq @user.id
+
+        new_artist = Artist.find(returned_json["artist_id"])
+        expect(new_artist.name).to eq 'Eric Clapton'
+      end
+    end
+
+    context 'request does not have correct data' do
+      let!(:no_artist_album_data) { { album: { title: new_album.title } } }
+      let!(:no_title_album_data) do
+        {
+          album: {
+            artist_name: 'The Beatles',
+            title: ' ' 
+          }
+        }
+      end
+      it "should not sucessfully post an album without an artist name" do
+        post(:create, params: no_artist_album_data)
+        expect(response.status).to eq 422
+      end
+
+      it 'should not successfully post an album without a title' do
+        post(:create, params: no_title_album_data)
+        expect(response.status).to eq 422
+      end
     end
   end
 end
