@@ -6,7 +6,7 @@ import {
  Link
 } from 'react-router-dom';
 import AlbumsIndexContainer from './AlbumsIndexContainer';
-import AlbumsNewFormContainer from './AlbumsNewFormContainer'
+import AlbumFormContainer from './AlbumFormContainer'
 
 const Home = () => {
   return (
@@ -20,7 +20,7 @@ const App = ({ }) => {
       <div>
         <Route exact path='/' component={Home} />
         <Route exact path='/albums' component={AlbumsIndexContainer} />
-        <Route path='/albums/new' component={AlbumsNewFormContainer} />
+        <Route path='/albums/new' component={AlbumFormContainer} />
 
       </div>
     </Router>
