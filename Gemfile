@@ -8,6 +8,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'dotenv'
 gem 'devise'
+gem 'active_model_serializers'
 
 group :development do
   gem 'listen', '~> 3.0.5'
@@ -18,6 +19,7 @@ end
 gem 'foundation-rails'
 
 group :development, :test do
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'
