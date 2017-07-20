@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AlbumsController, type: :controller do
-
   describe "GET#index" do
     before(:each) do
       @very_prolific = create(:artist)
@@ -42,13 +41,26 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
       sign_in @user
     end
 
-    let!(:new_album) { FactoryGirl.create(:album, title: 'Round Room', artist: @very_prolific, uploader: @user) }
+    let!(:new_album) do
+      FactoryGirl.create(:album,
+        title: 'Round Room',
+        artist: @very_prolific,
+        uploader: @user
+      )
+    end
 
     context 'artist exists in database' do
-      let!(:new_album_data) { { album: { title: new_album.title, artist_name: @very_prolific.name } } }
+      let!(:new_album_data) do
+        {
+          album: {
+            title: new_album.title,
+            artist_name: @very_prolific.name
+          }
+        }
+      end
 
       it "should create a new album" do
-        expect{ post(:create, params: new_album_data) }.to change{ Album.count }.by 1
+        expect{ post(:create, params: new_album_data) }.to change { Album.count }.by 1
       end
 
       it 'should return a json of the newly created album' do
@@ -66,10 +78,17 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     end
 
     context 'artist does not exist in database' do
-      let!(:new_artist_album_data) { { album: { title: new_album.title, artist_name: 'Eric Clapton' } } }
+      let!(:new_artist_album_data) do
+        {
+          album: {
+            title: new_album.title,
+            artist_name: 'Eric Clapton'
+          }
+        }
+      end
 
       it "should create a new album" do
-        expect{ post(:create, params: new_artist_album_data) }.to change{ Album.count }.by 1
+        expect { post(:create, params: new_artist_album_data) }.to change { Album.count }.by 1
       end
 
       it 'should return a json of the newly created album' do
@@ -89,11 +108,10 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     end
 
     context 'request does not have correct data' do
-      let!(:no_artist_album_data) { {album: { title: new_album.title } }}
+      let!(:no_artist_album_data) { { album: { title: new_album.title } } }
 
       it "should not sucessfully post an album without a title" do
         post(:create, params: no_artist_album_data)
-        returned_json = JSON.parse(response.body)
         expect(response.status).to eq 422
       end
     end
