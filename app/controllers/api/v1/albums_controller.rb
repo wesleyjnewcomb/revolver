@@ -1,10 +1,12 @@
 class Api::V1::AlbumsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    # binding.pry
     render json: Album.all, adapter: :json
   end
 
   def create
+    binding.pry
     @new_album = Album.new(album_params)
     @new_album.uploader = current_user
 
