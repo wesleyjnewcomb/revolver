@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import AlbumTile from '../components/AlbumTile'
 
 
@@ -35,6 +36,9 @@ class AlbumsIndexContainer extends React.Component {
     });
     return (
       <div className='albums-index'>
+        <div className='text-center'>
+          <Link className='button' to='/albums/new'>Submit New Album</Link>
+        </div>
         {albums}
       </div>
     );
