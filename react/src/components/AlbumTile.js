@@ -1,18 +1,8 @@
 import React from 'react'
 
 const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ]
 
 const AlbumTile = ({ album }) => {
@@ -22,7 +12,7 @@ const AlbumTile = ({ album }) => {
   return (
     <div className='album-tile panel row'>
       <h3 className='left'>{album.title}</h3>
-      <h4 className='right secondary'>{months[month]} {year}</h4>
+      <h4 className='right'>{months[month]} {year}</h4>
     </div>
   )
 }
