@@ -29,8 +29,8 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
 
       expect(returned_json["albums"][0]["title"]).to eq "The White Album"
       expect(returned_json["albums"][4]["title"]).to eq "Dark Side of the Moon"
-      expect(returned_json["albums"][0]["artist_id"]).to eq @very_prolific.id
-      expect(returned_json["albums"][4]["artist_id"]).to eq @very_prolific.id
+      expect(returned_json["albums"][0]["artist"]["id"]).to eq @very_prolific.id
+      expect(returned_json["albums"][4]["artist"]["id"]).to eq @very_prolific.id
     end
   end
 
@@ -73,7 +73,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
         expect(returned_json).to be_a(Hash)
         expect(returned_json["title"]).to eq new_album.title
         expect(returned_json["uploader_id"]).to eq @user.id
-        expect(returned_json["artist_id"]).to eq @very_prolific.id
+        expect(returned_json["artist"]["id"]).to eq @very_prolific.id
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
         expect(returned_json["title"]).to eq new_album.title
         expect(returned_json["uploader_id"]).to eq @user.id
 
-        new_artist = Artist.find(returned_json["artist_id"])
+        new_artist = Artist.find(returned_json["artist"]["id"])
         expect(new_artist.name).to eq 'Eric Clapton'
       end
     end
@@ -113,7 +113,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
         {
           album: {
             artist_name: 'The Beatles',
-            title: ' ' 
+            title: ' '
           }
         }
       end
