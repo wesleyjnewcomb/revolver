@@ -6,7 +6,7 @@ class Api::V1::AlbumsController < ApplicationController
   end
 
   def create
-    binding.pry
+    data = JSON.parse(request.body.read)
     @new_album = Album.new(album_params)
     @new_album.uploader = current_user
 
@@ -20,6 +20,7 @@ class Api::V1::AlbumsController < ApplicationController
       created_artist = true
     end
     @new_album.artist = artist
+
     if @new_album.save
       render json: @new_album
     else

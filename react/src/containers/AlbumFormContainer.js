@@ -7,13 +7,17 @@ constructor(props){
   this.state = {
     title: '',
     date_released: '',
-    artist: '',
-    form: []
+    artist: ''
   }
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleSubmitForm = this.handleSubmitForm.bind(this)
 }
+
+componentDidMount(){
+
+}
+
 
 handleTextFieldChange(event) {
   event.preventDefault();
@@ -27,11 +31,24 @@ handleClearForm(event) {
 
 handleSubmitForm(event){
 event.preventDefault();
-let submissions = [];
-let payload = [this.state.title, this.state.date_released, this.state.artist]
-this.setState({ form: submissions.concat(payload) });
-this.handleClearForm(event)
+let payload = { album: { title: this.state.title, date_released: this.state.date_released, artist_name: this.state.artist } };
+// debugger;
+console.log(payload);
+fetch('/api/v1/albums', {
+  method: 'POST',
+  credentials: 'same-origin',
+  body: JSON.stringify(payload)
+}).then(response => {
+  if (response.ok) {
+    return response
+  }
+}).then(response => {
+    let body = response.json();
+    return body;
+  });
+  this.handleClearForm(event)
 }
+
 
 
 
