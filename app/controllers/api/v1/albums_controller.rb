@@ -22,7 +22,6 @@ class Api::V1::AlbumsController < ApplicationController
     if @new_album.save
       render json: @new_album
     else
-      binding.pry
       if created_artist
         artist.destroy
       end
