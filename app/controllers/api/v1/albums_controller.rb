@@ -3,6 +3,15 @@ class Api::V1::AlbumsController < ApplicationController
     render json: Album.all, adapter: :json
   end
 
+  def show
+    if Album.exists?(params[:id])
+      album = Album.find(params[:id])
+      render json: album, adapter: :json
+    else
+      render json: { error: 'Album not found' }, status: 404
+    end
+  end
+
   def create
     new_album_hash = JSON.parse(request.body.read)["album"]
     @new_album = Album.new({
