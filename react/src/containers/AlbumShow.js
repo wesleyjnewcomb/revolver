@@ -41,6 +41,15 @@ class AlbumShow extends Component {
           updatedAt: 'a day ago',
           body: 'album suxxx',
           rating: 2
+        },
+        {
+          id: 2,
+          albumId: 3,
+          username: 'chill_dude',
+          createdAt: 'loong ago',
+          updatedAt: 'never',
+          body: 'album dece',
+          rating: 6
         }
       ],
       fetched: true

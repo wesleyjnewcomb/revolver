@@ -10,7 +10,7 @@ const ReviewTile = props => {
   let rating = review.rating
 
   return(
-    <div>
+    <div className="small-12 panel columns">
       <div className="row">
         <h3 className="left">
           Rating: {rating}/10
