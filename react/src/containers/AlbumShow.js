@@ -69,6 +69,7 @@ class AlbumShow extends Component {
     }
     return(
       <div>
+        <h2>{this.state.albumTitle}</h2>
         {reviewsIndex}
       </div>
     );
