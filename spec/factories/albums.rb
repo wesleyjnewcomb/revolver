@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :album do
-    uploader_id { 1 }
+    uploader { FactoryGirl.create(:user) }
     title "Junta"
-    artist
+    artist { FactoryGirl.create(:artist) }
   end
 end

@@ -1,5 +1,7 @@
+require 'faker'
+
 FactoryGirl.define do
   factory :artist do
-    name 'The Beatles'
+    name Faker::Name.unique.name
   end
 end
