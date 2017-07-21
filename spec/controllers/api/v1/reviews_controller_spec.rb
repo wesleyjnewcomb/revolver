@@ -6,21 +6,42 @@ RSpec.describe Api::V1::ReviewsController, type: :controller do
     let!(:reviews) { FactoryGirl.create_list(:review, 5, album: album ) }
     let!(:other_review) { FactoryGirl.create(:review) }
 
-    it 'should return an array of reviews of the correct length' do
-      get :index, params: { album_id: album.id }
-      returned_json = JSON.parse(response.body)
-      expect(response.status).to eq 200
-      expect(response.content_type).to eq 'application/json'
+    context 'getting all reviews' do
+      it 'should return an array of reviews of the correct length' do
+        get :index
+        returned_json = JSON.parse(response.body)
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq 'application/json'
 
-      expect(returned_json['reviews'].length).to eq 5
+        expect(returned_json['reviews'].length).to eq 6
+      end
+
+      it 'should return all reviews' do
+        get :index
+        returned_json = JSON.parse(response.body)
+
+        expect(returned_json['reviews'][0]['id']).to eq reviews[0].id
+        expect(returned_json['reviews'][5]['id']).to eq other_review.id
+      end
     end
 
-    it 'should only return the reviews for a single album' do
-      get :index, params: { album_id: album.id }
-      returned_json = JSON.parse(response.body)
+    context 'getting reviews for one album' do
+      it 'should return an array of reviews of the correct length' do
+        get :index, params: { album_id: album.id }
+        returned_json = JSON.parse(response.body)
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq 'application/json'
 
-      reviews.each_with_index do |review, index|
-        expect(returned_json['reviews'][index]['id']).to eq review[:id]
+        expect(returned_json['reviews'].length).to eq 5
+      end
+
+      it 'should only return the reviews for a single album' do
+        get :index, params: { album_id: album.id }
+        returned_json = JSON.parse(response.body)
+
+        reviews.each_with_index do |review, index|
+          expect(returned_json['reviews'][index]['id']).to eq review[:id]
+        end
       end
     end
   end
