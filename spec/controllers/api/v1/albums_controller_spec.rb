@@ -10,7 +10,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
       create(:album, uploader: bob, title: "Dark Side of the Moon", artist: @very_prolific)
     end
 
-    it "should return a list of albums with the correct length" do
+    it "should render a list of albums with the correct length" do
       get :index
       returned_json = JSON.parse(response.body)
       expect(response.status).to eq 200
@@ -20,7 +20,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
       expect(returned_json["albums"].length).to eq 5
     end
 
-    it "should return a list of with correct album data" do
+    it "should render a list of with correct album data" do
       get :index
       returned_json = JSON.parse(response.body)
       expect(response.status).to eq 200
@@ -31,6 +31,27 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
       expect(returned_json["albums"][4]["title"]).to eq "Dark Side of the Moon"
       expect(returned_json["albums"][0]["artist"]["id"]).to eq @very_prolific.id
       expect(returned_json["albums"][4]["artist"]["id"]).to eq @very_prolific.id
+    end
+  end
+
+  describe 'GET#show' do
+    let!(:album) { FactoryGirl.create(:album) }
+    it 'should render a json representing the correct album' do
+      get :show, params: { id: album.id }
+      returned_json = JSON.parse(response.body)
+
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq "application/json"
+      expect(returned_json).to be_a Hash
+
+      expect(returned_json["album"]["id"]).to eq album.id
+      expect(returned_json["album"]["title"]).to eq album.title
+      expect(returned_json["album"]["artist"]["id"]).to eq album.artist.id
+    end
+
+    it 'should respond with 404 if the album is not found' do
+      get :show, params: { id: 1 }
+      expect(response.status).to eq 404
     end
   end
 
