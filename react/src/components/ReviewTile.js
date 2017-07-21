@@ -3,10 +3,7 @@ import React from 'react';
 const ReviewTile = props => {
   let review = props.content
 
-  let username = review.username
   let body = review.body
-  let createdAt = review.createdAt
-  let updatedAt = review.updatedAt
   let rating = review.rating
 
   return(

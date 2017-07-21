@@ -11,49 +11,24 @@ class AlbumShow extends Component {
   }
 
   componentDidMount() {
-    // fetch(`api/v1/albums/${this.props.albumId}/reviews`)
-    // .then(response => {
-    //   if (response.ok) {
-    //     return response
-    //   } else {
-    //     let errorMessage = `${response.status} (${response.statusText})`;
-    //     let error = new Error(errorMessage);
-    //     throw(error);
-    //   }
-    // })
-    // .then(response => {
-    //   debugger;
-    //   this.setState({
-    //     albumReviews: [
-    //       { sup: 'dooood' }
-    //     ]
-    //   });
-    // })
-    // .catch(error => console.error(`Error in fetch: ${error.message}`))
-    this.setState({
-      albumTitle: 'the white album',
-      albumReviews: [
-        {
-          id: 1,
-          albumId: 3,
-          username: 'enthusiastick',
-          createdAt: 'a week ago',
-          updatedAt: 'a day ago',
-          body: 'album suxxx',
-          rating: 2
-        },
-        {
-          id: 2,
-          albumId: 3,
-          username: 'chill_dude',
-          createdAt: 'loong ago',
-          updatedAt: 'never',
-          body: 'album dece',
-          rating: 6
-        }
-      ],
-      fetched: true
-    });
+    fetch(`/api/v1/albums/${this.props.match.params.id}/reviews`)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`;
+        let error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .then(response => {
+
+      this.setState({
+        fetched: true,
+        albumReviews: response.reviews
+      });
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`))
   }
 
   render() {

@@ -4,7 +4,7 @@ import ReviewTile from '../components/ReviewTile';
 const ReviewsIndex = props => {
   let reviewTiles = props.reviewsData.map((reviewObj) => {
     let key = reviewObj.id
-    return(
+    return (
       <ReviewTile
         key={key}
         content={reviewObj}

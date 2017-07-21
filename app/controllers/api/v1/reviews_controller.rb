@@ -23,5 +23,4 @@ class Api::V1::ReviewsController < ApplicationController
       render json: { errors: @new_review.errors.full_messages }, status: 422
     end
   end
-
 end
