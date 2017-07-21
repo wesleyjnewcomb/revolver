@@ -56,15 +56,15 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
             title: new_album.title,
             artist_name: @very_prolific.name
           }
-        }
+        }.to_json
       end
 
       it "should create a new album" do
-        expect{ post(:create, params: new_album_data) }.to change { Album.count }.by 1
+        expect{ post(:create, body: new_album_data) }.to change { Album.count }.by 1
       end
 
       it 'should return a json of the newly created album' do
-        post(:create, params: new_album_data)
+        post(:create, body: new_album_data)
         returned_json = JSON.parse(response.body)
 
         expect(response.status).to eq 200
@@ -84,15 +84,15 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
             title: new_album.title,
             artist_name: 'Eric Clapton'
           }
-        }
+        }.to_json
       end
 
       it "should create a new album" do
-        expect { post(:create, params: new_artist_album_data) }.to change { Album.count }.by 1
+        expect { post(:create, body: new_artist_album_data) }.to change { Album.count }.by 1
       end
 
       it 'should return a json of the newly created album' do
-        post(:create, params: new_artist_album_data)
+        post(:create, body: new_artist_album_data)
         returned_json = JSON.parse(response.body)
 
         expect(response.status).to eq 200
@@ -108,22 +108,29 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     end
 
     context 'request does not have correct data' do
-      let!(:no_artist_album_data) { { album: { title: new_album.title } } }
+      let!(:no_artist_album_data) do
+        {
+          album: {
+            title: new_album.title
+          }
+        }.to_json
+      end
+
       let!(:no_title_album_data) do
         {
           album: {
             artist_name: 'The Beatles',
             title: ' '
           }
-        }
+        }.to_json
       end
       it "should not sucessfully post an album without an artist name" do
-        post(:create, params: no_artist_album_data)
+        post(:create, body: no_artist_album_data)
         expect(response.status).to eq 422
       end
 
       it 'should not successfully post an album without a title' do
-        post(:create, params: no_title_album_data)
+        post(:create, body: no_title_album_data)
         expect(response.status).to eq 422
       end
     end
