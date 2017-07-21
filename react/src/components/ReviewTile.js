@@ -1,0 +1,34 @@
+import React from 'react';
+
+const ReviewTile = props => {
+  let review = props.content
+
+  let username = review.username
+  let body = review.body
+  let createdAt = review.createdAt
+  let updatedAt = review.updatedAt
+  let rating = review.rating
+
+  return(
+    <div>
+      <div className="row">
+        <h3 className="left">
+          Rating: {rating}/10
+        </h3>
+        <h3 className="right">
+          {username}
+        </h3>
+      </div>
+      <div>
+        <h4 className="right">
+          {createdAt}
+        </h4>
+      </div>
+      <div className="review-body">
+        {body}
+      </div>
+    </div>
+  );
+}
+
+export default ReviewTile;
