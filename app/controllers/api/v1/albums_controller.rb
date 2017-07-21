@@ -21,7 +21,6 @@ class Api::V1::AlbumsController < ApplicationController
     end
     @new_album.artist = artist
 
-    binding.pry
     if @new_album.save
       render json: @new_album
     else
