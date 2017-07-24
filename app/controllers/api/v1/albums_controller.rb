@@ -4,8 +4,12 @@ class Api::V1::AlbumsController < ApplicationController
   end
 
   def show
-    album = Album.find(params[:id])
-    render json: album, adapter: :json
+    if Album.exists?(params[:id])
+      album = Album.find(params[:id])
+      render json: album, adapter: :json
+    else
+      render json: { error: 'Album not found' }, status: 404
+    end
   end
 
   def create
