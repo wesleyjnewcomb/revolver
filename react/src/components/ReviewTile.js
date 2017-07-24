@@ -6,7 +6,6 @@ const ReviewTile = props => {
   let body = review.body
   let rating = review.rating
   let username = review.username
-  let userEmail = review.user_email
 
   return(
     <div className="small-12 panel columns">
