@@ -11,6 +11,7 @@ zappa = Artist.create(name: "Frank Zappa")
 pearljam = Artist.create(name: "Perl Jam")
 
 eben = User.create(email: "eben@lowe.com", username: "enthusiastick", password: "itseben")
+nick = User.create(email: "nick@nick.nick", username: "enthusiasNICK", password: "itsnickiguess")
 
 Album.create({
   uploader: eben,
@@ -70,6 +71,12 @@ Review.create({
 Review.create({
   album_id: 1,
   user_id: 1,
+  body: 'dis album aight',
+  rating: 2
+})
+Review.create({
+  album_id: 1,
+  user: nick,
   body: 'dis album aight',
   rating: 2
 })

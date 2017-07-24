@@ -5,6 +5,8 @@ const ReviewTile = props => {
 
   let body = review.body
   let rating = review.rating
+  let username = review.username
+  let userEmail = review.user_email
 
   return(
     <div className="small-12 panel columns">
@@ -12,6 +14,11 @@ const ReviewTile = props => {
         <h3 className="left">
           Rating: {rating}/10
         </h3>
+        <div className="right">
+          <h3>
+            {username}
+          </h3>
+        </div>
       </div>
       <div className="review-body">
         {body}

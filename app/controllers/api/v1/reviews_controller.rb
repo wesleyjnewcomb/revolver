@@ -2,7 +2,18 @@ class Api::V1::ReviewsController < ApplicationController
   def index
     if params[:album_id]
       reviews = Review.where({ album_id: params[:album_id] })
-      render json: reviews, adapter: :json
+      reviews_responses = []
+      reviews.length.times do
+        reviews_responses << {}
+      end
+      reviews.each_with_index do |review, i|
+        review.attributes.each do |key, value|
+          reviews_responses[i][key] = value
+        end
+        reviews_responses[i]['username'] = review.user.username
+        reviews_responses[i]['user_email'] = review.user.email
+      end
+      render json: reviews_responses, adapter: :json
     else
       render json: Review.all, adapter: :json
     end

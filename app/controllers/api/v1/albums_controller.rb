@@ -3,6 +3,11 @@ class Api::V1::AlbumsController < ApplicationController
     render json: Album.all, adapter: :json
   end
 
+  def show
+    album = Album.find(params[:id])
+    render json: album, adapter: :json
+  end
+
   def create
     new_album_hash = JSON.parse(request.body.read)["album"]
     @new_album = Album.new({
