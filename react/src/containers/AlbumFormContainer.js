@@ -7,8 +7,7 @@ constructor(props){
   this.state = {
     title: '',
     date_released: '',
-    artist: '',
-    form: []
+    artist: ''
   }
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
@@ -27,45 +26,51 @@ handleClearForm(event) {
 
 handleSubmitForm(event){
 event.preventDefault();
-let submissions = [];
-let payload = [this.state.title, this.state.date_released, this.state.artist]
-this.setState({ form: submissions.concat(payload) });
-this.handleClearForm(event)
+let payload = { album: { title: this.state.title, date_released: this.state.date_released, artist_name: this.state.artist } };
+fetch('/api/v1/albums', {
+  method: 'POST',
+  credentials: 'same-origin',
+  body: JSON.stringify(payload)
+}).then(response => {
+  if (response.ok) {
+    return response
+  }
+}).then(response => {
+    let body = response.json();
+    return body;
+  });
+  this.handleClearForm(event)
 }
 
-
-
 render(){
-
-  let handleChange = (event) => {this.handleTextFieldChange(event)}
-  let handleClearForm = (event) => {this.handleClearForm(event)}
-
   return(
-    <div className="small-6 columns small-centered">
-      <h2>New Album</h2>
-      <form>
-        <TextField
-          name='title'
-          label='Title'
-          content={this.state.title}
-          handleChange={handleChange}
-        />
-        <TextField
-          name='date_released'
-          label='Date Released'
-          content={this.state.date_released}
-          handleChange={handleChange}
-        />
-        <TextField
-          name='artist'
-          label='Artist'
-          content={this.state.artist}
-          handleChange={handleChange}
-        />
-        <button onClick={this.handleSubmitForm}>Add</button>
-        <br />
-        <button onClick={handleClearForm}>Clear</button>
-      </form>
+    <div className='album-form'>
+      <div className="panel small-6 columns small-centered">
+        <h2>New Album</h2>
+        <form onSubmit={this.handleSubmitForm}>
+          <TextField
+            name='title'
+            label='Title'
+            content={this.state.title}
+            handleChange={this.handleTextFieldChange}
+          />
+          <TextField
+            name='date_released'
+            label='Date Released'
+            content={this.state.date_released}
+            handleChange={this.handleTextFieldChange}
+          />
+          <TextField
+            name='artist'
+            label='Artist'
+            content={this.state.artist}
+            handleChange={this.handleTextFieldChange}
+          />
+          <input type='submit' className='button'/>
+          &nbsp;
+          <button onClick={this.handleClearForm} className='button secondary'>Clear</button>
+        </form>
+      </div>
     </div>
   )
   }
