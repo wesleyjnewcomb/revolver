@@ -22,7 +22,6 @@ class AlbumShow extends Component {
       }
     })
     .then(response => {
-
       this.setState({
         fetched: true,
         albumReviews: response.reviews
@@ -35,12 +34,16 @@ class AlbumShow extends Component {
     let reviewsIndex;
     let reviewsData = []
     if (this.state.fetched) {
-      reviewsData = this.state.albumReviews
-      reviewsIndex = (
-        <ReviewsIndex
-          reviewsData={reviewsData}
-        />
-      )
+      if (this.state.albumReviews.length == 0) {
+        reviewsIndex = "No reviews found"
+      } else {
+        reviewsData = this.state.albumReviews
+        reviewsIndex = (
+          <ReviewsIndex
+            reviewsData={reviewsData}
+          />
+        )
+      }
     }
     return(
       <div>
