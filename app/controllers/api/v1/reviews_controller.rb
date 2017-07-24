@@ -1,8 +1,14 @@
 class Api::V1::ReviewsController < ApplicationController
   def index
     if params[:album_id]
-      reviews = Review.where({ album_id: params[:album_id] })
-      render json: reviews, adapter: :json
+      review_models = Review.where({ album_id: params[:album_id] })
+      reviews = []
+      review_models.each_with_index do |review, i|
+        reviews << review_models[i].serializable_hash
+        reviews[i]['username'] = review_models[i].user.username
+        reviews[i]['user_email'] = review_models[i].user.email
+      end
+      render json: { reviews: reviews }, adapter: :json
     else
       render json: Review.all, adapter: :json
     end
@@ -23,5 +29,4 @@ class Api::V1::ReviewsController < ApplicationController
       render json: { errors: @new_review.errors.full_messages }, status: 422
     end
   end
-
 end

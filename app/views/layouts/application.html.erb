@@ -27,15 +27,17 @@
               <a href='#'>Signed in as <%= current_user.username %></a>
               <ul class='dropdown'>
                 <li>
+                  <%= link_to "Edit profile", edit_user_registration_path %>
+                <li>
                   <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
                 </li>
               </ul>
-            <% else %>
-              <%= link_to "Sign Up", new_user_registration_path, class: 'button' %>
-              <%= link_to "Log in", new_user_session_path, class: 'button' %>
-            <% end %>
-          </li>
-        </>
+            </li>
+          <% else %>
+            <li class='active'><%= link_to "Sign Up", new_user_registration_path %></li>
+            <li><%= link_to "Log in", new_user_session_path %></li>
+          <% end %>
+        </ul>
       </section>
     </nav>
     <% if notice %>

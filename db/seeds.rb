@@ -11,6 +11,7 @@ zappa = Artist.create(name: "Frank Zappa")
 pearljam = Artist.create(name: "Perl Jam")
 
 eben = User.create(email: "eben@lowe.com", username: "enthusiastick", password: "itseben")
+nick = User.create(email: "nick@nick.nick", username: "enthusiasNICK", password: "itsnickiguess")
 
 Album.create({
   uploader: eben,
@@ -18,7 +19,7 @@ Album.create({
   artist: pearljam,
   date_released: Date.new(1991, 8, 27)
 })
-Album.create({
+junta = Album.create({
   uploader: eben,
   title: "Junta",
   artist: phish,
@@ -30,7 +31,7 @@ Album.create({
   artist: phish,
   date_released: Date.new(1995, 4, 3)
 })
-Album.create({
+help = Album.create({
   uploader: eben,
   title: "Help",
   artist: beatles,
@@ -55,8 +56,27 @@ Album.create({
   date_released: Date.new(1967, 5, 26)
 })
 Album.create({
-  uploader: eben, 
+  uploader: eben,
   title: "Apostrophe",
   artist: zappa,
   date_released: Date.new(1974, 3, 22)
+})
+
+Review.create({
+  album: help,
+  user: eben,
+  body: 'album suxxx',
+  rating: 2
+})
+Review.create({
+  album_id: 1,
+  user_id: 1,
+  body: 'dis album aight',
+  rating: 2
+})
+Review.create({
+  album_id: 1,
+  user: nick,
+  body: '..ehh',
+  rating: 2
 })
