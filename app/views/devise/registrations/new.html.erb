@@ -4,7 +4,7 @@
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <% if resource.errors.any? %>
-      <div class="panel">
+      <div class="panel alert">
         <%= devise_error_messages! %>
       </div>
     <% end %>
@@ -19,8 +19,7 @@
     <div class="field">
       <%= f.password_field :password,
         autocomplete: "off",
-        placeholder: 'Password',
-        'aria-describedby' => 'passwordHelpText'
+        placeholder: 'Password'
       %>
     </div>
 
