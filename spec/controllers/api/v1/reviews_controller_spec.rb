@@ -31,7 +31,6 @@ RSpec.describe Api::V1::ReviewsController, type: :controller do
         returned_json = JSON.parse(response.body)
         expect(response.status).to eq 200
         expect(response.content_type).to eq 'application/json'
-
         expect(returned_json['reviews'].length).to eq 5
       end
 
