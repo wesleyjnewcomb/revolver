@@ -39,18 +39,76 @@ feature 'user edits profile' do
     expect(user.email).to eq 'dale@gribble.com'
   end
 
-  scenario 'user fills out form with invalid values' do
-    visit edit_user_registration_path
-    id = user.id
-    fill_in 'Username', with: 'a'
-    fill_in 'Email', with: 'dalegribble.com'
-    fill_in 'Password', with: 'testtest'
-    fill_in 'Confirm Password', with: 'testtest'
-    fill_in 'Current Password', with: user.password
+  context 'user fills out form with invalid values' do
+    scenario 'user enters a username that is too short' do
+      visit edit_user_registration_path
+      id = user.id
+      fill_in 'Username', with: 'a'
+      fill_in 'Email', with: 'dale@gribble.com'
+      fill_in 'Password', with: 'testtest'
+      fill_in 'Confirm Password', with: 'testtest'
+      fill_in 'Current Password', with: user.password
 
-    click_on 'Update'
+      click_on 'Update'
 
-    expect(page).to have_content 'errors prohibited this user from being saved'
+      expect(page).to have_content 'Username is too short'
+    end
+
+    scenario 'user enters a username that is too long' do
+      visit edit_user_registration_path
+      id = user.id
+      fill_in 'Username', with: '123456789012345678901a'
+      fill_in 'Email', with: 'dale@gribble.com'
+      fill_in 'Password', with: 'testtest'
+      fill_in 'Confirm Password', with: 'testtest'
+      fill_in 'Current Password', with: user.password
+
+      click_on 'Update'
+
+      expect(page).to have_content 'Username is too long'
+    end
+
+    scenario 'user enters invalid email' do
+      visit edit_user_registration_path
+      id = user.id
+      fill_in 'Username', with: 'rustyshackleford'
+      fill_in 'Email', with: 'dalegribble.com'
+      fill_in 'Password', with: 'testtest'
+      fill_in 'Confirm Password', with: 'testtest'
+      fill_in 'Current Password', with: user.password
+
+      click_on 'Update'
+
+      expect(page).to have_content 'Email is invalid'
+    end
+
+    scenario 'user enters an password that is too short' do
+      visit edit_user_registration_path
+      id = user.id
+      fill_in 'Username', with: 'rustyshackleford'
+      fill_in 'Email', with: 'dalegribble.com'
+      fill_in 'Password', with: 'test'
+      fill_in 'Confirm Password', with: 'test'
+      fill_in 'Current Password', with: user.password
+
+      click_on 'Update'
+
+      expect(page).to have_content 'Password is too short'
+    end
+
+    scenario 'confirmation password does not match new password' do
+      visit edit_user_registration_path
+      id = user.id
+      fill_in 'Username', with: 'rustyshackleford'
+      fill_in 'Email', with: 'dalegribble.com'
+      fill_in 'Password', with: 'testtest'
+      fill_in 'Confirm Password', with: 'doesnotmatch'
+      fill_in 'Current Password', with: user.password
+
+      click_on 'Update'
+
+      expect(page).to have_content 'Password confirmation doesn\'t match Password'
+    end
   end
 
   scenario 'user does not fill out current password' do
