@@ -77,6 +77,6 @@ Review.create({
 Review.create({
   album_id: 1,
   user: nick,
-  body: 'dis album aight',
+  body: '..ehh',
   rating: 2
 })

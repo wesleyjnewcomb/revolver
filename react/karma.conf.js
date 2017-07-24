@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = function(config) {
   config.set({
     // use the PhantomJS browser
-    browsers: ['PhantomJS'],
+    // browsers: ['PhantomJS'],
 
     // use the Jasmine testing framework
     frameworks: ['jasmine'],
