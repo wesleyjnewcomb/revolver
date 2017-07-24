@@ -27,8 +27,6 @@ handleClearForm(event) {
 handleSubmitForm(event){
 event.preventDefault();
 let payload = { album: { title: this.state.title, date_released: this.state.date_released, artist_name: this.state.artist } };
-// debugger;
-console.log(payload);
 fetch('/api/v1/albums', {
   method: 'POST',
   credentials: 'same-origin',
