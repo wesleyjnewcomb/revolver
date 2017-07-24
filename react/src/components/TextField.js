@@ -1,14 +1,15 @@
 import React from 'react';
 
-const TextField = props => {
+const TextField = ({ label, name, content, handleChange }) => {
   return (
-    <input
-      name={props.name}
-      type="text"
-      placeholder={props.label}
-      onChange={props.handleChange}
-      value={props.content}
-    />
+    <label>{label}
+      <input
+        name={name}
+        type="text"
+        onChange={handleChange}
+        value={content}
+      />
+    </label>
   );
 }
 

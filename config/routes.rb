@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'static_pages#index'
   get '/albums', to: 'static_pages#index'
   get '/albums/new', to: 'static_pages#index'
-  get '/albums/:id', to: 'static_pages#index'
+  get '/albums/:id/reviews/new', to: 'static_pages#index'
 
   namespace :api do
     namespace :v1 do
