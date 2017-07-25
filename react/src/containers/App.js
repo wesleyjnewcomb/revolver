@@ -22,12 +22,12 @@ const App = ({ }) => {
   return (
     <Router>
       <div>
-        <div className='large-3 medium-4 columns'>
+        <div className='large-3 medium-4 columns side-bar'>
           <div className='hide-for-small'>
             <SideNav/>
           </div>
         </div>
-        <div className='large-9 medium-8 columns'>
+        <div className='large-9 medium-8 columns page-container'>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/albums' component={AlbumsIndexContainer} />
