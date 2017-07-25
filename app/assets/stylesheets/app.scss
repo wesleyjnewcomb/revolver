@@ -1,3 +1,28 @@
+$primary-color: #008CBA;
+
 .page-container {
   padding-top: 12px;
+}
+
+.side-bar {
+  background: #e7e7e7;
+}
+
+.react-accordion {
+  padding: 0.5em;
+  background: $primary-color;
+}
+
+.react-accordion .title {
+  color: #eee;
+  text-align: center;
+  cursor: pointer;
+}
+
+.react-accordion .contents {
+  padding: 0.5em;
+  background: white;
+  color: black;
+  margin-top: 12px;
+  margin-bottom: 0;
 }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReviewsIndex from './ReviewsIndex';
+import ReviewFormContainer from './ReviewFormContainer'
+import Accordion from './Accordion';
 
-import months from '../monthAbbreviations'
+import months from '../monthAbbreviations';
 
 class AlbumShow extends Component {
   constructor(props) {
@@ -81,6 +83,10 @@ class AlbumShow extends Component {
               {months[this.state.monthReleased]} {this.state.yearReleased}
             </h4>
           </div>
+          <Accordion title='Submit new review'>
+            <ReviewFormContainer />
+          </Accordion>
+          <h3>Reviews</h3>
           <div>{reviewsIndex}</div>
         </div>
       </div>
