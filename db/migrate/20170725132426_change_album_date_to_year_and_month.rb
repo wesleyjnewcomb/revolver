@@ -17,7 +17,6 @@ class ChangeAlbumDateToYearAndMonth < ActiveRecord::Migration[5.1]
   def down
     add_column :albums, :date_released, :date
 
-    # populate columns
     Album.all.each do |album|
       if(album.year_released && album.month_released)
         album.date_released = Date.new(album.year_released, album.month_released + 1, 1)
