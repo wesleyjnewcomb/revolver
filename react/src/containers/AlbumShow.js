@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReviewsIndex from './ReviewsIndex';
 
+import months from '../monthAbbreviations'
+
 class AlbumShow extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,7 @@ class AlbumShow extends Component {
     .then(response => {
       this.setState({
         fetched: true,
-        albumReviews: response
+        albumReviews: response.reviews
       });
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`))
@@ -44,7 +46,9 @@ class AlbumShow extends Component {
     .then(response => {
       this.setState({
         albumTitle: response.album.title,
-        albumArtist: response.album.artist.name
+        albumArtist: response.album.artist.name,
+        yearReleased: response.album.year_released,
+        monthReleased: response.album.month_released
       });
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`))
@@ -66,12 +70,19 @@ class AlbumShow extends Component {
       }
     }
     return(
-      <div>
-        <div className="row">
-          <h2 className="left">{this.state.albumTitle}</h2>
-          <h3 className="right">{this.state.albumArtist}</h3>
+      <div className='row'>
+        <div className="album-tile panel">
+          <div className='row'>
+            <h3 className="medium-9 small-8 columns">
+              <span className="album-artist">{this.state.albumArtist}</span>
+              <span className='album-title'>{this.state.albumTitle}</span>
+            </h3>
+            <h4 className="medium-3 small-4 columns text-right">
+              {months[this.state.monthReleased]} {this.state.yearReleased}
+            </h4>
+          </div>
+          <div>{reviewsIndex}</div>
         </div>
-        {reviewsIndex}
       </div>
     );
   }

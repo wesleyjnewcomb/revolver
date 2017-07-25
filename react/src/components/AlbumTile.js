@@ -1,14 +1,10 @@
 import React from 'react'
 
-const months = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-]
+import months from '../monthAbbreviations'
 
 const AlbumTile = ({ album }) => {
-  let dateReleased = new Date(album.date_released)
-  let month = dateReleased.getMonth()
-  let year = dateReleased.getFullYear()
+  let month = album.month_released
+  let year = album.year_released
   return (
     <div className='album-tile panel row'>
       <h3 className='left'>
