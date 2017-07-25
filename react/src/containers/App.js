@@ -28,11 +28,13 @@ const App = ({ }) => {
           </div>
         </div>
         <div className='large-9 medium-8 columns'>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/albums' component={AlbumsIndexContainer} />
-          <Route path='/albums/new' component={AlbumFormContainer} />
-          <Route path='/albums/:id/reviews/new' component={ReviewFormContainer} />
-          <Route path='/albums/:id' component={AlbumShow} />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/albums' component={AlbumsIndexContainer} />
+            <Route exact path='/albums/new' component={AlbumFormContainer} />
+            <Route exact path='/albums/:id' component={AlbumShow} />
+            <Route path='/albums/:id/reviews/new' component={ReviewFormContainer} />
+          </Switch>
         </div>
       </div>
     </Router>

@@ -5,7 +5,8 @@ describe('AlbumTile', () => {
   let album = {
     id: 1,
     title: "Revolver",
-    date_released: "1966-08-05",
+    year_released: 1966,
+    month_released: 7,
     artist: {
       id: 1,
       name: "The Beatles"
