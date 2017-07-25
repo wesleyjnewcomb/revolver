@@ -11,7 +11,6 @@ class ChangeAlbumDateToYearAndMonth < ActiveRecord::Migration[5.1]
         album.save
       end
     end
-    binding.pry
     remove_column :albums, :date_released
   end
 
