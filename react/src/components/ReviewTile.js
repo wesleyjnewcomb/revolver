@@ -10,17 +10,19 @@ const ReviewTile = props => {
   return(
     <div className='panel'>
       <div>
-        <h3 className="medium-9 small-8 columns">
-          Rating: {rating}/10
-        </h3>
+        <div className="medium-9 small-8 columns">
+          <h3 className="rating">
+            Rating: {rating}/10
+          </h3>
+        </div>
         <div className="medium-3 small-4 columns">
-          <h3>
+          <h3 className='username'>
             {username}
           </h3>
         </div>
       </div>
       <div className="small-10 columns small-centered">
-        {body}
+        <p className='review-body'>{body}</p>
       </div>
     </div>
   );
