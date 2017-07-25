@@ -27,6 +27,11 @@
       <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm Password' %>
     </div>
 
+    <div class="field">
+      <%= f.label :avatar, "Profile Photo" %>
+      <%= f.file_field :avatar %>
+    </div>
+
     <div class="actions">
       <%= f.submit "Sign up", class: 'button' %>
       <%= render "devise/shared/links" %>
