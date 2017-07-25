@@ -17,11 +17,11 @@ describe('ReviewTile', () => {
     )
   });
 
-  it('should render the rating on the left', () => {
-    expect(wrapper.find('.left').text()).toEqual(`Rating: ${data.rating}/10`)
+  it('should render the rating', () => {
+    expect(wrapper.find('.rating').text()).toEqual(`Rating: ${data.rating}/10`)
   })
-  it('should render the username on the right', () => {
-    expect(wrapper.find('.right').text()).toEqual(data.username)
+  it('should render the username', () => {
+    expect(wrapper.find('.username').text()).toEqual(data.username)
   })
   it('should render the review body', () => {
     expect(wrapper.find('.review-body').text()).toEqual(data.body)

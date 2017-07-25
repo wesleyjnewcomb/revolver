@@ -19,13 +19,13 @@ const Home = () => {
 const App = ({ }) => {
   return (
     <Router>
-      <div>
+      <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/albums' component={AlbumsIndexContainer} />
-        <Route path='/albums/new' component={AlbumFormContainer} />
+        <Route exact path='/albums/new' component={AlbumFormContainer} />
+        <Route exact path='/albums/:id' component={AlbumShow} />
         <Route path='/albums/:id/reviews/new' component={ReviewFormContainer} />
-        <Route path='/albums/:id' component={AlbumShow} />
-      </div>
+      </Switch>
     </Router>
   )
 }
