@@ -1,4 +1,5 @@
 import React from 'react';
+import VoteTile from './VoteTile';
 
 const ReviewTile = props => {
   let review = props.content
@@ -23,6 +24,9 @@ const ReviewTile = props => {
       </div>
       <div className="small-10 columns small-centered">
         <p className='review-body'>{body}</p>
+      </div>
+      <div>
+        <VoteTile tally={0} />
       </div>
     </div>
   );
