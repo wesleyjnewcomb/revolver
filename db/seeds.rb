@@ -43,14 +43,14 @@ Review.create({
 })
 
 Review.create({
-  album: peppers
+  album: peppers,
   user: wesley,
   body: 'Never understood all the excitement around this. Definitely solid though',
   rating: 7
 })
 
 Review.create({
-  album: peppers
+  album: peppers,
   user: nick,
   body: 'Overtly psychedelic; an important pop landmark. Good songwriting. Special favorite: Lovely Rita.',
   rating: 8
