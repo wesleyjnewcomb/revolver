@@ -12,8 +12,15 @@ class AlbumShow extends Component {
       fetched: false,
       albumReviews: [],
       albumTitle: '',
-      albumArtist: ''
+      albumArtist: '',
+
+      rating: null,
+      body: '',
+      errors: []
     }
+
+    this.handleSubmitForm = this.handleSubmitForm.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -56,6 +63,51 @@ class AlbumShow extends Component {
     .catch(error => console.error(`Error in fetch: ${error.message}`))
   }
 
+  validateInput() {
+    let errors = [];
+
+    if(this.state.rating == null) {
+      errors.push('Review must have a rating');
+    }
+    console.log(errors);
+    this.setState({errors: errors})
+
+    if(errors.length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  handleSubmitForm(e) {
+    e.preventDefault();
+
+    if (!this.validateInput()) {
+      console.log('Bad form');
+      return false;
+    }
+    // fetch goes here
+
+    let new_review = {
+      id: 1000,
+      rating: this.state.rating,
+      body: this.state.body,
+      username: 'Kyle'
+    }
+    let new_reviews = [ new_review ].concat(this.state.albumReviews);
+    this.setState({ albumReviews: new_reviews })
+
+    this.clearForm()
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  clearForm() {
+    this.setState({body: ''})
+  }
+
   render() {
     let reviewsIndex;
     let reviewsData = []
@@ -84,7 +136,12 @@ class AlbumShow extends Component {
             </h4>
           </div>
           <Accordion title='Submit new review'>
-            <ReviewFormContainer />
+            <ReviewFormContainer
+              handleChange={this.handleChange}
+              handleSubmitForm={this.handleSubmitForm}
+              clearForm={this.clearForm}
+              errors={this.state.errors}
+            />
           </Accordion>
           <h3>Reviews</h3>
           <div>{reviewsIndex}</div>
