@@ -9,6 +9,7 @@ class Api::V1::ReviewsController < ApplicationController
         reviews << review_models[i].serializable_hash
         reviews[i]['username'] = review_models[i].user.username
         reviews[i]['user_email'] = review_models[i].user.email
+        reviews[i]['score'] = review_models[i].score
       end
       render json: { reviews: reviews }, adapter: :json
     else
