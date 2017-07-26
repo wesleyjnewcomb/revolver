@@ -2,29 +2,24 @@ import React from 'react'
 
 import RadioButton from '../components/RadioButton'
 import TextArea from '../components/TextArea'
-
+import ErrorBox from '../components/ErrorBox'
 
 class ReviewFormContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rating: null,
-      body: ''
+
     }
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    this.props.handleChange(e);
   }
 
-  handleSubmitForm(e) {
+  clearForm(e) {
     e.preventDefault();
-  }
-
-  clearForm() {
-    e.preventDefault();
-    this.setState({body: ''})
+    this.props.clearForm()
 
   }
 
@@ -41,11 +36,16 @@ class ReviewFormContainer extends React.Component {
       { label: '9', value: '9' },
       { label: '10', value: '10' }
     ]
+
+    let errors;
+    if(this.props.errors.length) {
+      errors = <ErrorBox errors={this.props.errors} />
+    }
+
     return (
       <div className='review-form'>
         <div className='small-6 columns small-centered'>
-          <h2>Submit New Review</h2>
-          <form onSubmit={this.handleSubmitForm}>
+          <form onSubmit={this.props.handleSubmitForm}>
             <RadioButton
               label='Rating'
               name='rating'
@@ -59,8 +59,13 @@ class ReviewFormContainer extends React.Component {
               content={this.state.body}
               handleChange={this.handleChange}
             />
-            <input type='submit' className='button'/>&nbsp;
-            <button onClick={this.clearForm} className='button secondary'>Clear</button>
+            <div className='small-12 columns'>
+              {errors}
+            </div>
+            <div className='text-center'>
+              <input type='submit' className='button'/>&nbsp;
+              <button onClick={this.clearForm} className='button secondary'>Clear</button>
+            </div>
           </form>
         </div>
       </div>

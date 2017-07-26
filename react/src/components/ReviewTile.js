@@ -30,6 +30,7 @@ const ReviewTile = props => {
         <VoteTile
           score={score}
           currentValue={0}
+          reviewId={review.id}
         />
       </div>
     </div>
