@@ -1,4 +1,5 @@
 import AlbumTile from '../../src/components/AlbumTile'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 
 describe('AlbumTile', () => {
   let wrapper;
@@ -14,9 +15,11 @@ describe('AlbumTile', () => {
   }
   beforeEach(() => {
     wrapper = mount(
-      <AlbumTile
-        album={album}
-      />
+      <Router>
+        <AlbumTile
+          album={album}
+        />
+      </Router>
     )
   });
 
