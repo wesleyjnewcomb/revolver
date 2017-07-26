@@ -18,7 +18,8 @@ class Api::V1::AlbumsController < ApplicationController
     new_album_hash = JSON.parse(request.body.read)["album"]
     @new_album = Album.new({
       title: new_album_hash["title"],
-      date_released: new_album_hash["date_released"]
+      year_released: new_album_hash["year_released"],
+      month_released: new_album_hash["month_released"]
     })
     @new_album.uploader = current_user
 

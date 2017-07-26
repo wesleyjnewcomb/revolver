@@ -5,78 +5,60 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-phish = Artist.create(name: "Phish")
 beatles = Artist.create(name: "The Beatles")
-zappa = Artist.create(name: "Frank Zappa")
-pearljam = Artist.create(name: "Perl Jam")
+led_zeppelin = Artist.create(name: 'Led Zeppelin')
 
-eben = User.create(email: "eben@lowe.com", username: "enthusiastick", password: "itseben")
-nick = User.create(email: "nick@nick.nick", username: "enthusiasNICK", password: "itsnickiguess")
+wesley = User.create(email: "wesleyjnewcomb@gmail.com", username: "wnewcomb", password: "testtest")
+nick = User.create(email: 'n.mikita3@gmail.com', username: 'nm357', password: 'testtest')
 
-Album.create({
-  uploader: eben,
-  title: "Ten",
-  artist: pearljam,
-  date_released: Date.new(1991, 8, 27)
-})
-junta = Album.create({
-  uploader: eben,
-  title: "Junta",
-  artist: phish,
-  date_released: Date.new(1989, 5, 8)
-})
-Album.create({
-  uploader: eben,
-  title: "Lawn Boy",
-  artist: phish,
-  date_released: Date.new(1995, 4, 3)
-})
-help = Album.create({
-  uploader: eben,
-  title: "Help",
-  artist: beatles,
-  date_released: Date.new(1965, 8, 6)
-})
-Album.create({
-  uploader: eben,
-  title: "Rubber Soul",
-  artist: beatles,
-  date_released: Date.new(1965, 12, 6)
-})
-Album.create({
-  uploader: eben,
+revolver = Album.create({
+  uploader: wesley,
   title: "Revolver",
   artist: beatles,
-  date_released: Date.new(1966, 8, 5)
+  year_released: 1966,
+  month_released: 7
 })
-Album.create({
-  uploader: eben,
+
+peppers = Album.create({
+  uploader: wesley,
   title: "Sgt. Pepper's Lonely Hearts Club Band",
   artist: beatles,
-  date_released: Date.new(1967, 5, 26)
+  year_released: 1967,
+  month_released: 4
 })
-Album.create({
-  uploader: eben,
-  title: "Apostrophe",
-  artist: zappa,
-  date_released: Date.new(1974, 3, 22)
+
+zepp3 = Album.create({
+  uploader: wesley,
+  title: "Led Zeppelin III",
+  artist: led_zeppelin,
+  year_released: 1970,
+  month_released: 9
 })
 
 Review.create({
-  album: help,
-  user: eben,
-  body: 'album suxxx',
-  rating: 2
+  album: revolver,
+  user: wesley,
+  body: 'The Beatles\' very best!',
+  rating: 9
 })
+
 Review.create({
-  album_id: 1,
-  user_id: 1,
-  body: 'dis album aight',
-  rating: 2
+  album: peppers,
+  user: wesley,
+  body: 'Never understood all the excitement around this. Definitely solid though',
+  rating: 7
 })
+
 Review.create({
-  album_id: 1,
+  album: peppers,
   user: nick,
-  body: '..ehh',
-  rating: 2
+  body: 'Overtly psychedelic; an important pop landmark. Good songwriting. Special favorite: Lovely Rita.',
+  rating: 8
+})
+
+Review.create({
+  album: zepp3,
+  user: wesley,
+  body: 'III > IV',
+  rating: 10
 })
