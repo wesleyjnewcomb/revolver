@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { Link } from 'react-router-dom'
 
 import TextField from '../components/TextField';
 import Dropdown from '../components/Dropdown';
@@ -75,19 +76,27 @@ handleSubmitForm(event) {
     credentials: 'same-origin',
     body: JSON.stringify(payload)
   }).then(response => {
-    if (response.ok) {
-      return response
+    if (response.ok || response.status === 403) {
+      return response.json()
+    } else {
+      let errorMessage = `${response.status} (${response.statusText})`;
+      let error = new Error(errorMessage);
+      throw(error);
     }
   }).then(response => {
-      let body = response.json();
-      return body;
-  });
+    if ('errors' in response) {
+      this.setState({ errors: response.errors })
+    } else {
+      this.setState({ newAlbum: response.album })
+    }
+  }).catch(error => console.error(`Error in fetch: ${error.message}`))
+
   this.handleClearForm(event)
 }
 
 render() {
   let errors;
-
+  let newAlbumLink;
   if(this.state.errors.length) {
     errors = <ErrorBox errors={this.state.errors} />
   }
@@ -97,8 +106,22 @@ render() {
   })
   monthOptions.unshift({label: '', value: null})
 
+  if (this.state.newAlbum) {
+    newAlbumLink = (
+      <div className='panel callout text-center'>
+        Your new album,&nbsp;
+        <Link to={`/albums/${this.state.newAlbum.id}`}>
+          {this.state.newAlbum.title}
+        </Link>
+        , has been added
+      </div>
+    )
+
+  }
+
   return(
     <div className='album-form'>
+      {newAlbumLink}
       <div className="panel small-6 columns small-centered">
         <h2>New Album</h2>
         <form onSubmit={this.handleSubmitForm}>
