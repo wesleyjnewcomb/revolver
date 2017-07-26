@@ -69,7 +69,6 @@ class AlbumShow extends Component {
     if(this.state.rating == null) {
       errors.push('Review must have a rating');
     }
-    console.log(errors);
     this.setState({errors: errors})
 
     if(errors.length) {
@@ -86,18 +85,51 @@ class AlbumShow extends Component {
       console.log('Bad form');
       return false;
     }
-    // fetch goes here
 
-    let new_review = {
-      id: 1000,
-      rating: this.state.rating,
-      body: this.state.body,
-      username: 'Kyle'
+    let payload = {
+      review: {
+        album_id: this.props.match.params.id,
+        rating: this.state.rating,
+        body: this.state.body
+      }
     }
-    let new_reviews = [ new_review ].concat(this.state.albumReviews);
-    this.setState({ albumReviews: new_reviews })
 
-    this.clearForm()
+    fetch('/api/v1/reviews', {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (response.ok || response.status === 403) {
+        return response.json()
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`;
+        let error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .then(response => {
+      if ('errors' in response) {
+        this.setState({ errors: response.errors })
+      }
+      else {
+        let newReview = {
+          id: response.review.id,
+          rating: response.review.rating,
+          body: response.review.body,
+          username: response.review.username
+        }
+        this.addNewReviewToState(newReview)
+        this.clearForm()
+      }
+    }).catch(error => console.error(`Error in fetch: ${error.message}`))
+
+  }
+
+  addNewReviewToState(newReview) {
+    let newReviews = [ newReview ].concat(this.state.albumReviews);
+    this.setState({ albumReviews: newReviews })
+
   }
 
   handleChange(e) {
