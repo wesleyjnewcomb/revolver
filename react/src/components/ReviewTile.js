@@ -11,7 +11,7 @@ const ReviewTile = props => {
 
   return(
     <div className='panel'>
-      <div>
+      <div className='row'>
         <div className="medium-9 small-8 columns">
           <h3 className="rating">
             Rating: {rating}/10
@@ -23,14 +23,17 @@ const ReviewTile = props => {
           </h3>
         </div>
       </div>
-      <div className="small-10 columns small-centered">
-        <p className='review-body'>{body}</p>
-      </div>
-      <div>
-        <VoteTile
-          score={score}
-          currentValue={0}
-        />
+      <div className='row'>
+        <div className='small-1 text-center columns'>
+          <VoteTile
+            score={score}
+            currentValue={0}
+            reviewId={review.id}
+          />
+        </div>
+        <div className="small-11 columns">
+          <p className='review-body'>{body}</p>
+        </div>
       </div>
     </div>
   );
