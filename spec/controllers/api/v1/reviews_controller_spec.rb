@@ -68,7 +68,7 @@ RSpec.describe Api::V1::ReviewsController, type: :controller do
         expect { post(:create, body: new_review_data) }.to change { Review.count }.by 1
       end
 
-      it "should return a json of the newly create review" do
+      it "should return a json of the newly created review" do
         post(:create, body: new_review_data)
         returned_json = JSON.parse(response.body)['review']
 
