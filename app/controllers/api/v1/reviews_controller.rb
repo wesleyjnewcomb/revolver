@@ -7,9 +7,9 @@ class Api::V1::ReviewsController < ApplicationController
       reviews = []
       review_models.each_with_index do |review, i|
         reviews << review_models[i].serializable_hash
-        reviews[i]['username'] = review_models[i].user.username
-        reviews[i]['user_email'] = review_models[i].user.email
+        reviews[i]['user'] = review_models[i].user.serializable_hash
         reviews[i]['score'] = review_models[i].score
+        reviews[i]['can_edit'] = (review_models[i].user == current_user || current_user.admin?)
       end
       render json: { reviews: reviews }, adapter: :json
     else
@@ -26,7 +26,7 @@ class Api::V1::ReviewsController < ApplicationController
       rating: new_review_hash["rating"],
       body: new_review_hash["body"],
       album_id: new_review_hash["album_id"],
-      user_id: current_user.id
+      user: current_user
     })
 
     if @new_review.save

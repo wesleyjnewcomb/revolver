@@ -24,7 +24,9 @@ class AlbumShow extends Component {
   }
 
   componentDidMount() {
-    fetch(`/api/v1/albums/${this.props.match.params.id}/reviews`)
+    fetch(`/api/v1/albums/${this.props.match.params.id}/reviews`, {
+      credentials: 'same-origin'
+    })
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -42,7 +44,9 @@ class AlbumShow extends Component {
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`))
 
-    fetch(`/api/v1/albums/${this.props.match.params.id}`)
+    fetch(`/api/v1/albums/${this.props.match.params.id}`, {
+      credentials: 'same-origin'
+    })
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -117,7 +121,8 @@ class AlbumShow extends Component {
           id: response.review.id,
           rating: response.review.rating,
           body: response.review.body,
-          username: response.review.username
+          user: response.review.user,
+          score: response.review.score
         }
         this.addNewReviewToState(newReview)
         this.clearForm()
