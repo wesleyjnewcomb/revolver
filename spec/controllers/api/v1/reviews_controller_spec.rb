@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::ReviewsController, type: :controller do
   describe "GET#index" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+    end
     let!(:album) { FactoryGirl.create(:album) }
     let!(:reviews) { FactoryGirl.create_list(:review, 5, album: album ) }
     let!(:other_review) { FactoryGirl.create(:review) }
@@ -79,7 +83,7 @@ RSpec.describe Api::V1::ReviewsController, type: :controller do
         expect(returned_json["rating"]).to eq new_review.rating
         expect(returned_json["body"]).to eq new_review.body
         expect(returned_json["album_id"]).to eq new_review.album_id
-        expect(returned_json["user_id"]).to eq @user.id
+        expect(returned_json["user"]["id"]).to eq @user.id
       end
     end
 
