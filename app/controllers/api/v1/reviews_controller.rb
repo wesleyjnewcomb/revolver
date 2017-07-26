@@ -1,4 +1,6 @@
 class Api::V1::ReviewsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     if params[:album_id]
       review_models = Review.where({ album_id: params[:album_id] })
@@ -15,6 +17,9 @@ class Api::V1::ReviewsController < ApplicationController
   end
 
   def create
+    if !current_user
+      return render json: { errors: ['Please sign in to submit a review'] }, status: 403
+    end
     new_review_hash = JSON.parse(request.body.read)["review"]
     @new_review = Review.new({
       rating: new_review_hash["rating"],
