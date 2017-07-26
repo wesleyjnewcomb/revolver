@@ -20,8 +20,7 @@ class Api::V1::ReviewsController < ApplicationController
       rating: new_review_hash["rating"],
       body: new_review_hash["body"],
       album_id: new_review_hash["album_id"],
-      user_id: current_user.id,
-      score: 0
+      user_id: current_user.id
     })
 
     if @new_review.save
