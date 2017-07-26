@@ -13,6 +13,6 @@ describe('VoteTile', () => {
   });
 
   it('should render the score', () => {
-    expect(wrapper.find('p').text()).toEqual('13')
+    expect(wrapper.find('.score').text()).toEqual('13')
   })
 })
