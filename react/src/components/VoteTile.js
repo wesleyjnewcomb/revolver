@@ -34,7 +34,9 @@ class VoteTile extends Component {
       <div className="vote-tile">
         <i className={upCssClass} onClick={upVote}/>
           <br />
+          <p>
             {total}
+          </p>
           <br />
         <i className={downCssClass} onClick={downVote}/>
       </div>
