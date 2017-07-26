@@ -163,8 +163,8 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
       sign_in @user
     end
 
+    let!(:album) { FactoryGirl.create(:album, uploader: @user)}
     context 'correct data in request' do
-      let!(:album) { FactoryGirl.create(:album, uploader: @user)}
       let!(:new_album_data) do
         {
           album: {
@@ -176,7 +176,8 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
         }.to_json
       end
       it 'should update an existing album with the provided data' do
-        patch(:update, params: { id: album.id }, body: new_album_data)
+        id = album.id
+        patch(:update, params: { id: id }, body: new_album_data)
         returned_json = JSON.parse(response.body)
 
         expect(response.status).to eq 200
@@ -186,26 +187,69 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
         expect(returned_json['album']["title"]).to eq 'Revolver'
         expect(returned_json['album']['year_released']).to eq 1965
         expect(returned_json['album']["artist"]["name"]).to eq 'The Beatles'
+
+        album = Album.find(id)
+        expect(album.title).to eq 'Revolver'
+        expect(album.artist.name).to eq 'The Beatles'
+        expect(album.year_released).to eq 1965
       end
     end
 
     context 'incorrect data in request' do
       it 'should not update if the title is not provided' do
-
+        no_title_data = {
+          album: {
+            artist_name: 'The Beatles',
+            month_released: 7,
+            year_released: 1965
+          }
+        }.to_json
+        id = album.id
+        patch(:update, params: { id: id }, body: no_title_data)
+        expect(response.status).to eq 422
       end
 
       it 'should not update if the artist is not provided' do
-
+        no_artist_data = {
+          album: {
+            title: 'Revolver',
+            month_released: 7,
+            year_released: 1965
+          }
+        }.to_json
+        id = album.id
+        patch(:update, params: { id: id }, body: no_artist_data)
+        expect(response.status).to eq 422
       end
     end
 
     context 'invalid user session' do
+      let!(:new_album_data) do
+        {
+          album: {
+            title: 'Revolver',
+            artist_name: 'The Beatles',
+            month_released: '',
+            year_released: 1965
+          }
+        }.to_json
+      end
       it 'should not update if the user is not logged in' do
+        sign_out @user
 
+        id = album.id
+        patch(:update, params: { id: id }, body: new_album_data)
+        returned_json = JSON.parse(response.body)
+
+        expect(response.status).to eq 403
       end
 
       it 'should not update if the user is not the creator of the album' do
+        album = FactoryGirl.create(:album)
+        patch(:update, params: { id: album.id }, body: new_album_data)
+        returned_json = JSON.parse(response.body)
 
+        expect(response.status).to eq 403
       end
     end
   end

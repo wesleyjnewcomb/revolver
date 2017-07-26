@@ -55,7 +55,6 @@ class Api::V1::AlbumsController < ApplicationController
       return render json: { errors: ['Album  not found'] }, status: 404
     end
 
-
     @new_album = Album.find(params[:id])
     if @new_album.uploader != current_user
       return render json: { errors: ['User is not album owner'] }, status: 403
