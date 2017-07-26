@@ -11,6 +11,7 @@ led_zeppelin = Artist.create(name: 'Led Zeppelin')
 wesley = User.create(email: "wesleyjnewcomb@gmail.com", username: "wnewcomb", password: "testtest")
 nick = User.create(email: 'n.mikita3@gmail.com', username: 'nm357', password: 'testtest')
 
+
 revolver = Album.create({
   uploader: wesley,
   title: "Revolver",
@@ -49,7 +50,7 @@ Review.create({
   rating: 7
 })
 
-Review.create({
+pepper = Review.create({
   album: peppers,
   user: nick,
   body: 'Overtly psychedelic; an important pop landmark. Good songwriting. Special favorite: Lovely Rita.',
@@ -62,3 +63,6 @@ Review.create({
   body: 'III > IV',
   rating: 10
 })
+
+vote1 = Vote.create(user: nick, review: pepper, value: 1)
+vote2 = Vote.create(user: wesley, review: pepper, value: 1)

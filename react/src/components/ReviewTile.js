@@ -7,6 +7,7 @@ const ReviewTile = props => {
   let body = review.body
   let rating = review.rating
   let username = review.username
+  let score = review.score
 
   return(
     <div className='panel'>
@@ -27,8 +28,8 @@ const ReviewTile = props => {
       </div>
       <div>
         <VoteTile
-          score={0}
-          currentValue={-1}
+          score={score}
+          currentValue={0}
         />
       </div>
     </div>

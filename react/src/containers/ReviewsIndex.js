@@ -11,6 +11,7 @@ const ReviewsIndex = props => {
       />
     )
   })
+  
   return(
     <div>
       {reviewTiles}

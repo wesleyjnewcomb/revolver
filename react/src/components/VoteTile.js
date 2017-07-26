@@ -22,11 +22,21 @@ class VoteTile extends Component {
     let total = this.props.score + this.state.userVote
     let upVote = () => { this.vote(1) }
     let downVote = () => { this.vote(-1) }
+    let upCssClass = 'fa fa-caret-up arrow'
+    let downCssClass = 'fa fa-caret-down arrow'
+    if (this.state.userVote === 1) {
+      upCssClass += ' highlighted-arrow'
+    } else if (this.state.userVote === -1) {
+      downCssClass += ' highlighted-arrow'
+    }
+
     return(
       <div className="vote-tile">
-        <i className='fa fa-caret-up arrow' onClick={upVote}/>
-          {total}
-        <i className='fa fa-caret-down arrow' onClick={downVote}/>
+        <i className={upCssClass} onClick={upVote}/>
+          <br />
+            {total}
+          <br />
+        <i className={downCssClass} onClick={downVote}/>
       </div>
     )
   }
