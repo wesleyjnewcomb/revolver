@@ -156,4 +156,57 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
       end
     end
   end
+
+  describe "PATCH#update" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+    end
+
+    context 'correct data in request' do
+      let!(:album) { FactoryGirl.create(:album, uploader: @user)}
+      let!(:new_album_data) do
+        {
+          album: {
+            title: 'Revolver',
+            artist_name: 'The Beatles',
+            month_released: '',
+            year_released: 1965
+          }
+        }.to_json
+      end
+      it 'should update an existing album with the provided data' do
+        patch(:update, params: { id: album.id }, body: new_album_data)
+        returned_json = JSON.parse(response.body)
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq 'application/json'
+
+        expect(returned_json).to be_a(Hash)
+        expect(returned_json['album']["title"]).to eq 'Revolver'
+        expect(returned_json['album']['year_released']).to eq 1965
+        expect(returned_json['album']["artist"]["name"]).to eq 'The Beatles'
+      end
+    end
+
+    context 'incorrect data in request' do
+      it 'should not update if the title is not provided' do
+
+      end
+
+      it 'should not update if the artist is not provided' do
+
+      end
+    end
+
+    context 'invalid user session' do
+      it 'should not update if the user is not logged in' do
+
+      end
+
+      it 'should not update if the user is not the creator of the album' do
+
+      end
+    end
+  end
 end
