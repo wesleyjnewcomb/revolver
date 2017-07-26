@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'dotenv'
 gem 'devise'
 gem 'active_model_serializers'
+gem 'fog'
+gem 'carrierwave'
 
 group :development do
   gem 'listen', '~> 3.0.5'
@@ -30,6 +32,7 @@ group :development, :test do
   gem 'valid_attribute'
   gem 'launchy'
   gem 'faker'
+  gem 'dotenv-rails'
 end
 
 group :test do

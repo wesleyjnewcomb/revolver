@@ -15,6 +15,9 @@ class Api::V1::AlbumsController < ApplicationController
   end
 
   def create
+    if !current_user
+      return render json: { errors: ['Please sign in to submit an album'] }, status: 403
+    end
     new_album_hash = JSON.parse(request.body.read)["album"]
     @new_album = Album.new({
       title: new_album_hash["title"],
@@ -34,7 +37,7 @@ class Api::V1::AlbumsController < ApplicationController
     @new_album.artist = artist
 
     if @new_album.save
-      render json: @new_album
+      render json: @new_album, adapter: :json
     else
       if created_artist
         artist.destroy
