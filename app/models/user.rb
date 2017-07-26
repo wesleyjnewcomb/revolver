@@ -13,5 +13,10 @@ class User < ApplicationRecord
     length: { in: 3..20 },
     format: { with: /\A[a-zA-Z0-9_-]+\z/ }
 
-    validates :role, inclusion: { in: User.roles.keys }
+  validates :role, inclusion: { in: User.roles.keys }
+
+  def admin?
+    role == 'admin'
+  end
+
 end
