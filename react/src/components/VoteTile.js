@@ -26,7 +26,6 @@ class VoteTile extends Component {
         value: vote
       }
     }
-
     fetch('/api/v1/votes', {
       method: 'POST',
       credentials: 'same-origin',
@@ -34,10 +33,8 @@ class VoteTile extends Component {
     })
     .then(response => {
       if (response.ok) {
-
         return response
       } else {
-
         let errorMessage = `${response.status} (${response.statusText})`
         let error = new Error(errorMessage)
         throw(error)
@@ -59,18 +56,15 @@ class VoteTile extends Component {
     }
 
     return(
-      <div className="vote-tile">
-        <i className={upCssClass} onClick={upVote}/>
-          <br />
-          <p>
-            {total}
-          </p>
-          <br />
-        <i className={downCssClass} onClick={downVote}/>
+      <div className="small-1 text-center">
+        <div className="vote-tile">
+          <i className={upCssClass} onClick={upVote}/>
+          <div className="score">{total}</div>
+          <i className={downCssClass} onClick={downVote}/>
+        </div>
       </div>
     )
   }
-
 }
 
 export default VoteTile;
