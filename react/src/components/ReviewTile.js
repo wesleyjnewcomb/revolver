@@ -26,7 +26,10 @@ const ReviewTile = props => {
         <p className='review-body'>{body}</p>
       </div>
       <div>
-        <VoteTile tally={0} />
+        <VoteTile
+          score={0}
+          currentValue={-1}
+        />
       </div>
     </div>
   );

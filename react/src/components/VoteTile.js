@@ -4,7 +4,7 @@ class VoteTile extends Component {
   constructor(props){
     super(props);
     this.state = {
-      userVote: 0
+      userVote: this.props.currentValue
     }
   }
 
@@ -19,7 +19,7 @@ class VoteTile extends Component {
   }
 
   render() {
-    let total = this.props.tally + this.state.userVote
+    let total = this.props.score + this.state.userVote
     let upVote = () => { this.vote(1) }
     let downVote = () => { this.vote(-1) }
     return(
