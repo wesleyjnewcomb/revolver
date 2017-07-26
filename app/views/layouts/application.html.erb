@@ -24,7 +24,10 @@
         <ul class='right'>
           <% if current_user %>
             <li class='has-dropdown'>
-              <a href='#'>Signed in as <%= current_user.username %></a>
+              <a href='#'>
+                Signed in as <%= current_user.username %>
+                <img class="avatar" src="<%= current_user.avatar %>" />
+              </a>
               <ul class='dropdown'>
                 <li>
                   <%= link_to "Edit profile", edit_user_registration_path %>

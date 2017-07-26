@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   enum role: [ :user, :admin ]
 
+  mount_uploader :avatar, AvatarUploader
+
   validates :username,
     presence: true,
     length: { in: 3..20 },
