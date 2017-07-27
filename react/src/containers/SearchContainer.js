@@ -61,6 +61,8 @@ class SearchContainer extends React.Component {
       <div className='albums-index'>
         <div className='text-center'>
           <Link className='button' to='/albums/new'>Submit New Album</Link>
+          &nbsp;
+          <Link className='button' to='/albums'>Browse</Link>
         </div>
         <div className="small-8 small-centered end columns">
           <form onSubmit={this.handleSearch}>
