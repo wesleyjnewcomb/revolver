@@ -23,6 +23,8 @@ class AlbumShow extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+
+
   componentDidMount() {
     fetch(`/api/v1/albums/${this.props.match.params.id}/reviews`, {
       credentials: 'same-origin'
