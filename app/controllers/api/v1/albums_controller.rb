@@ -87,4 +87,14 @@ class Api::V1::AlbumsController < ApplicationController
       render json: { errors: @new_album.errors.full_messages }, status: 422
     end
   end
+
+  def destroy
+    album = Album.find(params[:album_id])
+    if current_user.admin? || current_user == album.uploader
+      album.destroy
+      render json: { message: `Deleted Album: ${album.title}` }, status: 204
+    else
+      render json: { message: 'Unauthorized to delete this album' }, status: 403
+    end
+  end
 end
