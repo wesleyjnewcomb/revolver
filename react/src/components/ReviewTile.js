@@ -4,13 +4,17 @@ import VoteTile from './VoteTile';
 const ReviewTile = props => {
   let review = props.content
 
-  let body = review.body
+  let body
   let rating = review.rating
   let username = review.user.username
   let avatar = review.user.avatar
   let currentValue = review.current_user_vote
   let score = review.score - currentValue
   let canVote = review.signed_in
+
+  if (review.body) {
+    body = <p className='review-body'>{review.body}</p>
+  }
 
   return(
     <div className='panel radius'>
@@ -31,7 +35,7 @@ const ReviewTile = props => {
           />
         </div>
         <div className="small-11 columns">
-          <p className='review-body'>{body}</p>
+          {body}
         </div>
       </div>
     </div>
