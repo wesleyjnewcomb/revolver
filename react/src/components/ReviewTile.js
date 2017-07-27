@@ -13,7 +13,7 @@ const ReviewTile = props => {
   let canVote = review.signed_in
 
   return(
-    <div className='panel'>
+    <div className='panel radius'>
       <div className="small-12 columns">
         <h3 className="left rating">{rating}/10</h3>
         <span className='right text-right'>

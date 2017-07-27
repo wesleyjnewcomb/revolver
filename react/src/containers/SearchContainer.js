@@ -59,24 +59,26 @@ class SearchContainer extends React.Component {
     }
     return (
       <div className='albums-index'>
-        <div className='text-center'>
+        <div className='row text-center'>
           <Link className='button' to='/albums/new'>Submit New Album</Link>
           &nbsp;
           <Link className='button' to='/albums'>Browse</Link>
         </div>
-        <div className="small-8 small-centered end columns">
-          <form onSubmit={this.handleSearch}>
-            <div className="small-11 columns">
-              <TextField
-                name='query'
-                content={this.state.query}
-                handleChange={this.handleTextFieldChange}
-              />
-            </div>
-            <div className="small-1 end columns">
-              <input className='button secondary small' type='submit' value='Search' />
-            </div>
-          </form>
+        <div className='row'>
+          <div className="small-8 small-centered end columns">
+            <form onSubmit={this.handleSearch}>
+              <div className="small-11 columns">
+                <TextField
+                  name='query'
+                  content={this.state.query}
+                  handleChange={this.handleTextFieldChange}
+                />
+              </div>
+              <div className="small-1 columns">
+                <input className='button secondary small' type='submit' value='Search' />
+              </div>
+            </form>
+          </div>
         </div>
         {albums}
         <br />
