@@ -22,7 +22,7 @@ class AlbumShow extends Component {
       body: '',
       errors: []
     }
-
+    this.clearForm = this.clearForm.bind(this)
     this.handleSubmitForm = this.handleSubmitForm.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.deleteAlbum = this.deleteAlbum.bind(this)
@@ -216,6 +216,7 @@ class AlbumShow extends Component {
               handleSubmitForm={this.handleSubmitForm}
               clearForm={this.clearForm}
               errors={this.state.errors}
+              content={this.state.body}
             />
           </Accordion>
           <h3>Reviews</h3>
