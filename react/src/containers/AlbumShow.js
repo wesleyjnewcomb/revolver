@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom'
+
 import ReviewsIndex from './ReviewsIndex';
 import ReviewFormContainer from './ReviewFormContainer'
 import Accordion from './Accordion';
@@ -11,8 +13,10 @@ class AlbumShow extends Component {
     this.state = {
       fetched: false,
       albumReviews: [],
+      albumId: null,
       albumTitle: '',
       albumArtist: '',
+      canEdit: false,
 
       rating: null,
       body: '',
@@ -21,9 +25,8 @@ class AlbumShow extends Component {
 
     this.handleSubmitForm = this.handleSubmitForm.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.deleteAlbum = this.deleteAlbum.bind(this)
   }
-
-
 
   componentDidMount() {
     fetch(`/api/v1/albums/${this.props.match.params.id}/reviews`, {
@@ -60,10 +63,12 @@ class AlbumShow extends Component {
     })
     .then(response => {
       this.setState({
+        albumId: response.album.id,
         albumTitle: response.album.title,
         albumArtist: response.album.artist.name,
         yearReleased: response.album.year_released,
-        monthReleased: response.album.month_released
+        monthReleased: response.album.month_released,
+        canEdit: response.album.can_edit
       });
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`))
@@ -147,7 +152,24 @@ class AlbumShow extends Component {
     this.setState({body: ''})
   }
 
+  deleteAlbum() {
+    if(confirm('Are you sure you want to delete this album')) {
+      fetch(`/api/v1/albums/${this.props.match.params.id}`, {
+        method: 'DELETE',
+        credentials: 'same-origin'
+      })
+      .then(response => {
+        if (response.ok) {
+          this.setState({ deleted: true })
+        }
+      })
+    }
+  }
+
   render() {
+    if (this.state.deleted) {
+      return <Redirect to='/albums' />
+    }
     let reviewsIndex;
     let reviewsData = []
     if (this.state.fetched) {
@@ -162,6 +184,19 @@ class AlbumShow extends Component {
         )
       }
     }
+    let editButtons;
+    if(this.state.canEdit) {
+      editButtons = (
+        <div className='text-right'>
+          <Link to={`/albums/${this.state.albumId}/edit`} className='button small success radius'>
+            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </Link>&nbsp;
+          <button className='button small alert radius' onClick={this.deleteAlbum}>
+            <i className="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+        </div>
+      )
+    }
     return(
       <div className='row'>
         <div className="album-tile panel">
@@ -174,6 +209,7 @@ class AlbumShow extends Component {
               {months[this.state.monthReleased]} {this.state.yearReleased}
             </h4>
           </div>
+          {editButtons}
           <Accordion title='Submit new review'>
             <ReviewFormContainer
               handleChange={this.handleChange}
