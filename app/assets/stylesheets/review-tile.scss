@@ -1,0 +1,28 @@
+.review-body {
+  background: white;
+  padding: 1em;
+  margin-top: 1em;
+  min-height: 8em;
+  border: 1px solid #999;
+}
+
+h3.rating {
+  padding: 0.7em;
+  color: white;
+  background: #444;
+  border: 1px solid #888;
+  border-radius: 6px;
+}
+
+.vote-tile {
+  font-size: 36px;
+  text-align: center;
+}
+
+.highlighted-arrow {
+  color: red
+}
+
+.score {
+  font-size: 30px
+}
