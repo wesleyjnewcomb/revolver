@@ -129,19 +129,19 @@ class AlbumShow extends Component {
           rating: response.review.rating,
           body: response.review.body,
           user: response.review.user,
-          score: response.review.score
+          score: 0,
+          current_user_vote: 0,
+          signed_in: true
         }
         this.addNewReviewToState(newReview)
         this.clearForm()
       }
     }).catch(error => console.error(`Error in fetch: ${error.message}`))
-
   }
 
   addNewReviewToState(newReview) {
     let newReviews = [ newReview ].concat(this.state.albumReviews);
     this.setState({ albumReviews: newReviews })
-
   }
 
   handleChange(e) {
@@ -189,10 +189,10 @@ class AlbumShow extends Component {
       editButtons = (
         <div className='text-right'>
           <Link to={`/albums/${this.state.albumId}/edit`} className='button small success radius'>
-            <i className="fa fa-pencil-square-o edit" aria-hidden="true"></i>
+            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
           </Link>&nbsp;
           <button className='button small alert radius' onClick={this.deleteAlbum}>
-            <i className="fa fa-trash-o delete" aria-hidden="true"></i>
+            <i className="fa fa-trash-o" aria-hidden="true"></i>
           </button>
         </div>
       )
