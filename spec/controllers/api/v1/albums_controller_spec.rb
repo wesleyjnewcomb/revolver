@@ -4,10 +4,15 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
   describe "GET#index" do
     before(:each) do
       @very_prolific = create(:artist)
-      bob = create(:user, email: "anything@anything.com")
-      create(:album, uploader: bob, title: "The White Album", artist: @very_prolific )
-      create_list(:album, 3, uploader: bob, artist: @very_prolific)
-      create(:album, uploader: bob, title: "Dark Side of the Moon", artist: @very_prolific)
+      @bob = FactoryGirl.create(:user, email: "anything@anything.com")
+      sign_in @bob
+      create(:album, uploader: @bob, title: "The White Album", artist: @very_prolific )
+      create_list(:album, 3, uploader: @bob, artist: @very_prolific)
+      create(:album, uploader: @bob, title: "Dark Side of the Moon", artist: @very_prolific)
+    end
+
+    after(:each) do
+      sign_out @bob
     end
 
     it "should render a list of albums with the correct length" do
@@ -34,7 +39,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     end
   end
 
-  describe 'GET#show' do
+  describe 'GET#show' do    
     let!(:album) { FactoryGirl.create(:album) }
     it 'should render a json representing the correct album' do
       get :show, params: { id: album.id }
