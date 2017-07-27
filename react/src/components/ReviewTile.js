@@ -8,7 +8,8 @@ const ReviewTile = props => {
   let rating = review.rating
   let username = review.user.username
   let avatar = review.user.avatar
-  let score = review.score
+  let currentValue = review.current_user_vote
+  let score = review.score - currentValue
 
   return(
     <div className='panel'>
@@ -23,7 +24,7 @@ const ReviewTile = props => {
         <div className='small-1 text-center columns'>
           <VoteTile
             score={score}
-            currentValue={0}
+            currentValue={currentValue}
             reviewId={review.id}
           />
         </div>
