@@ -129,7 +129,9 @@ class AlbumShow extends Component {
           rating: response.review.rating,
           body: response.review.body,
           user: response.review.user,
-          score: response.review.score
+          score: 0,
+          current_user_vote: 0,
+          signed_in: true
         }
         this.addNewReviewToState(newReview)
         this.clearForm()
