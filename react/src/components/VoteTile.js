@@ -45,14 +45,18 @@ class VoteTile extends Component {
 
   render() {
     let total = this.props.score + this.state.userVote
-    let upVote = () => { this.vote(1) }
-    let downVote = () => { this.vote(-1) }
     let upCssClass = 'fa fa-caret-up arrow'
     let downCssClass = 'fa fa-caret-down arrow'
-    if (this.state.userVote === 1) {
-      upCssClass += ' highlighted-arrow'
-    } else if (this.state.userVote === -1) {
-      downCssClass += ' highlighted-arrow'
+    let upVote = () => {}
+    let downVote = () => {}
+    if (this.props.canVote) {
+      upVote = () => { this.vote(1) }
+      downVote = () => { this.vote(-1) }
+      if (this.state.userVote === 1) {
+        upCssClass += ' highlighted-arrow'
+      } else if (this.state.userVote === -1) {
+        downCssClass += ' highlighted-arrow'
+      }
     }
 
     return(

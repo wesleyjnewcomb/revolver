@@ -10,13 +10,16 @@ class Api::V1::ReviewsController < ApplicationController
         reviews[i]['user'] = review_models[i].user.serializable_hash
         reviews[i]['score'] = review_models[i].score
         if current_user
+          reviews[i]['signed_in'] = true
           reviews[i]['can_edit'] = (review_models[i].user == current_user || current_user.admin?)
           reviews[i]['current_user_vote'] = Vote.find_by({ review_id: review.id, user_id: current_user.id })
           reviews[i]['current_user_vote'] &&= reviews[i]['current_user_vote'].value
         else
           reviews[i]['can_edit'] = false
         end
+        reviews[i]['signed_in'] ||= false
         reviews[i]['current_user_vote'] ||= 0
+
       end
       render json: { reviews: reviews }, adapter: :json
     else

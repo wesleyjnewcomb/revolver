@@ -10,6 +10,7 @@ const ReviewTile = props => {
   let avatar = review.user.avatar
   let currentValue = review.current_user_vote
   let score = review.score - currentValue
+  let canVote = review.signed_in
 
   return(
     <div className='panel'>
@@ -26,6 +27,7 @@ const ReviewTile = props => {
             score={score}
             currentValue={currentValue}
             reviewId={review.id}
+            canVote={canVote}
           />
         </div>
         <div className="small-11 columns">
