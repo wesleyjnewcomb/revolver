@@ -6,22 +6,18 @@ const ReviewTile = props => {
 
   let body = review.body
   let rating = review.rating
-  let username = review.username
+  let username = review.user.username
+  let avatar = review.user.avatar
   let score = review.score
 
   return(
     <div className='panel'>
-      <div className='row'>
-        <div className="medium-9 small-8 columns">
-          <h3 className="rating">
-            Rating: {rating}/10
-          </h3>
-        </div>
-        <div className="medium-3 small-4 columns">
-          <h3 className='username'>
-            {username}
-          </h3>
-        </div>
+      <div className="small-12 columns">
+        <h3 className="left rating">{rating}/10</h3>
+        <span className='right text-right'>
+          <img className='avatar' src={avatar.url} /><br/>
+          <i className='username'>{username}</i>
+        </span>
       </div>
       <div className='row'>
         <div className='small-1 text-center columns'>
