@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/albums/:id', to: 'static_pages#index'
   get '/albums/:id/edit', to: 'static_pages#index'
   get '/albums/:id/reviews/new', to: 'static_pages#index'
+  resources :users, only: [:index, :destroy]
 
   namespace :api do
     namespace :v1 do
