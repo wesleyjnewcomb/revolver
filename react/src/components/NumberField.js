@@ -1,13 +1,13 @@
 import React from 'react';
 
-const NumberField = ({ label, name, content, min, max, handleChange }) => {
+const NumberField = ({ label, name, value, min, max, handleChange }) => {
   return (
     <label>{label}
       <input
         name={name}
         type="number"
         onChange={handleChange}
-        value={content}
+        value={value}
         min={min}
         max={max}
       />
