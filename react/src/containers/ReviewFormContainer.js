@@ -7,10 +7,9 @@ import ErrorBox from '../components/ErrorBox'
 class ReviewFormContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
+    this.state = {}
     this.handleChange = this.handleChange.bind(this)
+    this.clearForm = this.clearForm.bind(this)
   }
 
   handleChange(e) {
@@ -49,14 +48,14 @@ class ReviewFormContainer extends React.Component {
             <RadioButton
               label='Rating'
               name='rating'
-              value={this.state.rating}
+              value={this.props.rating}
               options={options}
               handleChange={this.handleChange}
             />
             <TextArea
               label='Review'
               name='body'
-              content={this.state.body}
+              content={this.props.content}
               handleChange={this.handleChange}
             />
             <div className='small-12 columns'>
