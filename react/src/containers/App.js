@@ -12,6 +12,7 @@ import AlbumFormContainer from './AlbumFormContainer';
 import EditAlbumFormContainer from './EditAlbumFormContainer';
 import ReviewFormContainer from './ReviewFormContainer';
 import AlbumShow from './AlbumShow';
+import SearchContainer from './SearchContainer'
 
 const Home = () => {
   return (
@@ -32,6 +33,7 @@ const App = ({ }) => {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/albums' component={AlbumsIndexContainer} />
+            <Route exact path='/albums/search' component={SearchContainer} />
             <Route exact path='/albums/new' component={AlbumFormContainer} />
             <Route exact path='/albums/:id/edit' component={EditAlbumFormContainer} />
             <Route exact path='/albums/:id' component={AlbumShow} />

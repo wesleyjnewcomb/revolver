@@ -32,6 +32,24 @@ class Api::V1::AlbumsController < ApplicationController
     end
   end
 
+  def search
+    artist = Artist.find_by(name: params[:artist])
+
+    albums = Album.where(artist: artist)
+
+    albums_data = albums.map do |album|
+      album_data = album.serializable_hash
+      album_data['artist'] = album.artist
+      if current_user
+        album_data['can_edit'] = (album.uploader == current_user || current_user.admin?)
+      else
+        album_data['can_edit'] = false
+      end
+      album_data
+    end
+    render json: { albums: albums_data }, adapter: :json
+  end
+
   def create
     if !current_user
       return render json: { errors: ['Please sign in to submit an album'] }, status: 403
