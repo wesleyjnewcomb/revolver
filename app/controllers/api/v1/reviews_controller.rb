@@ -19,9 +19,10 @@ class Api::V1::ReviewsController < ApplicationController
         end
         reviews[i]['signed_in'] ||= false
         reviews[i]['current_user_vote'] ||= 0
-
       end
-      render json: { reviews: reviews }, adapter: :json
+      sorted_reviews = reviews.sort_by{ |review| review['score'] }
+      
+      render json: { reviews: sorted_reviews.reverse }, adapter: :json
     else
       render json: Review.all, adapter: :json
     end
