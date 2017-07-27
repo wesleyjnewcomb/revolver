@@ -43,7 +43,7 @@ RSpec.describe Api::V1::ReviewsController, type: :controller do
         returned_json = JSON.parse(response.body)
 
         reviews.each_with_index do |review, index|
-          expect(returned_json['reviews'][index]['id']).to eq review[:id]
+          expect(returned_json['reviews'][index]['album_id']).to eq review[:album_id]
         end
       end
     end
