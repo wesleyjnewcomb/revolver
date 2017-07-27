@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import TextField from '../components/TextField';
 import Dropdown from '../components/Dropdown';
@@ -104,12 +104,16 @@ class AlbumFormContainer extends Component{
       if ('errors' in response) {
         this.setState({ errors: response.errors })
       } else {
-        this.setState({ newAlbum: response.album })
+        this.setState({ redirect: `/albums/${response.album.id}` })
       }
     }).catch(error => console.error(`Error in fetch: ${error.message}`))
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
+
     let errors;
     let newAlbumLink;
     if(this.state.errors.length) {
