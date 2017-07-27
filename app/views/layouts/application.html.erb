@@ -23,7 +23,11 @@
       </ul>
       <section class='top-bar-section'>
         <ul class='right'>
-          <% if current_user %>
+          <% if current_user%>
+            <% if current_user && current_user.admin?%>
+            <li><%= link_to "Users", users_path %></li>
+
+            <% end %>
             <li class='has-dropdown'>
               <a href='#'>
                 Signed in as <%= current_user.username %>

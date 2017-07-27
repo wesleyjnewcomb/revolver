@@ -4,5 +4,10 @@
 
 <div>
 <%=user.username %>
+<%= link_to "delete user", user, method: :delete, data: { confirm: "Are you sure?" } %>
+
 </div>
-  <%end%>
+
+  <%end%> <br>
+
+  <%= link_to "Back", root_path %>

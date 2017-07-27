@@ -2,13 +2,16 @@ class UsersController < ApplicationController
   # before_action :set_users, only: [:index]
 
   def index
+     unless current_user && current_user.admin?
+       redirect_to root_url
+     end
      @users = User.all
-    #  @user = User.find(params[:id])
-    #  @users.destroy
-    #  @displays = User.ids
+
+
   end
-  
+
   def destroy
+    binding.pry
    @user = User.find(params[:id])
 
    if @user.destroy
