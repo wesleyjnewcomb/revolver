@@ -38,6 +38,8 @@ class AlbumsIndexContainer extends React.Component {
       <div className='albums-index'>
         <div className='text-center'>
           <Link className='button' to='/albums/new'>Submit New Album</Link>
+          &nbsp;
+          <Link className='button' to='/albums/search'>Search By Artist</Link>
         </div>
         {albums}
       </div>
