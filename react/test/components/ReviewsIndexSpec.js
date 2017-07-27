@@ -7,18 +7,28 @@ describe('ReviewsIndex', () => {
     {
       id: 1,
       album_id: 1,
-      user_id: 1,
-      user_email: 'test@test.test',
-      username: 'yo-mammy',
+      user: {
+        id: 1,
+        username: 'rustyshackleford',
+        email: 'test@test.test',
+        avatar: {
+          url: 'https://google.com'
+        }
+      },
       body: 'ugh',
       rating: 6
     },
     {
       id: 2,
       album_id: 1,
-      user_id: 2,
-      user_email: 'i@love.everyone',
-      username: 'bleh',
+      user: {
+        id: 2,
+        username: 'bleh',
+        email: 'i@love.you',
+        avatar: {
+          url: 'https://reddit.com'
+        }
+      },
       body: 'AH',
       rating: 3
     }

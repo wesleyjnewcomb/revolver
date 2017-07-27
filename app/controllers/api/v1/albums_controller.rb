@@ -107,10 +107,10 @@ class Api::V1::AlbumsController < ApplicationController
   end
 
   def destroy
-    album = Album.find(params[:album_id])
-    if current_user.admin? || current_user == album.uploader
+    album = Album.find(params[:id])
+    if current_user && (current_user.admin? || current_user == album.uploader)
       album.destroy
-      render json: { message: `Deleted Album: ${album.title}` }, status: 204
+      render json: { message: "Deleted Album: #{album.title}" }, status: 204
     else
       render json: { message: 'Unauthorized to delete this album' }, status: 403
     end

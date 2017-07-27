@@ -39,7 +39,7 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
     end
   end
 
-  describe 'GET#show' do    
+  describe 'GET#show' do
     let!(:album) { FactoryGirl.create(:album) }
     it 'should render a json representing the correct album' do
       get :show, params: { id: album.id }
@@ -257,5 +257,137 @@ RSpec.describe Api::V1::AlbumsController, type: :controller do
         expect(response.status).to eq 403
       end
     end
+  end
+
+  describe "DELETE#destroy" do
+
+    context "album successfully deleted by admin" do
+
+      before(:each) do
+        @admin = FactoryGirl.create(:user, role: "admin")
+        sign_in @admin
+        @album = FactoryGirl.create(:album)
+        @album_2 = FactoryGirl.create(:album)
+        @reviews = FactoryGirl.create_list(:review, 3, album: @album)
+        @reviews_2 = FactoryGirl.create_list(:review, 2, album: @album_2)
+      end
+
+      it "should return a json confirming the deletion" do
+        delete :destroy, params: { id: @album.id }
+        returned_json = JSON.parse(response.body)
+        # binding.pry
+        expect(response.status).to eq 204
+        # expect(response.content_type).to eq 'application/json'
+        expect(returned_json["message"]).to include("Deleted Album:")
+      end
+
+      it "should remove the album from the database" do
+        delete(:destroy, params: { id: @album.id })
+        expect(Album.all).to_not include(@album)
+      end
+
+      it "should only destroy the intended album" do
+        delete(:destroy, params: { id: @album.id })
+        expect(Album.all).to include(@album_2)
+      end
+
+      it "should remove the deleted album's reviews from the database" do
+        delete(:destroy, params: { id: @album.id })
+        @reviews.each do |review|
+          expect(Review.all).to_not include(review)
+        end
+      end
+
+      it "should not destroy any other reviews" do
+        delete(:destroy, params: { id: @album.id })
+        @reviews_2.each do |review|
+          expect(Review.all).to include(review)
+        end
+      end
+    end
+
+    context "album successfully deleted by uploader" do
+
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        sign_in @user
+        @album = FactoryGirl.create(:album, uploader: @user)
+        @album_2 = FactoryGirl.create(:album)
+        @reviews = FactoryGirl.create_list(:review, 3, album: @album)
+        @reviews_2 = FactoryGirl.create_list(:review, 2, album: @album_2)
+      end
+
+      it "should return a json confirming the deletion" do
+        delete :destroy, params: { id: @album.id }
+        returned_json = JSON.parse(response.body)
+        expect(response.status).to eq 204
+        expect(returned_json["message"]).to include("Deleted Album:")
+      end
+
+      it "should remove the album from the database" do
+        delete(:destroy, params: { id: @album.id })
+        expect(Album.all).to_not include(@album)
+      end
+
+      it "should only destroy the intended album" do
+        delete(:destroy, params: { id: @album.id })
+        expect(Album.all).to include(@album_2)
+      end
+
+      it "should remove the deleted album's reviews from the database" do
+        delete(:destroy, params: { id: @album.id })
+        @reviews.each do |review|
+          expect(Review.all).to_not include(review)
+        end
+      end
+
+      it "should not destroy any other reviews" do
+        delete(:destroy, params: { id: @album.id })
+        @reviews_2.each do |review|
+          expect(Review.all).to include(review)
+        end
+      end
+    end
+
+    context "non-admin user tries to delete an album they didn't upload" do
+
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        @user_2 = FactoryGirl.create(:user)
+        sign_in @user
+        @album = FactoryGirl.create(:album, uploader: @user_2)
+      end
+
+      it "should not remove any albums from the database" do
+        expect{ delete(:destroy, params: { id: @album.id }) }.to change{ Album.count }.by 0
+      end
+
+      it "should return a json indicating the unsuccesful deletion" do
+        delete :destroy, params: { id: @album.id }
+        returned_json = JSON.parse(response.body)
+        expect(response.status).to eq 403
+        expect(returned_json["message"]).to include("Unauthorized")
+      end
+    end
+
+    context "unauthenticated user tries to delete an album" do
+
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        @album = FactoryGirl.create(:album, uploader: @user)
+      end
+
+      it "should not remove any albums from the database" do
+        expect{ delete(:destroy, params: { id: @album.id }) }.to change{ Album.count }.by 0
+      end
+
+      it "should return a json indicating the unsuccesful deletion" do
+        delete :destroy, params: { id: @album.id }
+        returned_json = JSON.parse(response.body)
+        expect(response.status).to eq 403
+        expect(returned_json["message"]).to include("Unauthorized")
+      end
+    end
+
   end
 end
