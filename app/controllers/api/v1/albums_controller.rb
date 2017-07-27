@@ -2,13 +2,31 @@ class Api::V1::AlbumsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    render json: Album.all, adapter: :json
+    albums = Album.all
+    albums_data = albums.map do |album|
+      album_data = album.serializable_hash
+      album_data['artist'] = album.artist
+      if current_user
+        album_data['can_edit'] = (album.uploader == current_user || current_user.admin?)
+      else
+        album_data['can_edit'] = false
+      end
+      album_data
+    end
+    render json: { albums: albums_data }, adapter: :json
   end
 
   def show
     if Album.exists?(params[:id])
       album = Album.find(params[:id])
-      render json: album, adapter: :json
+      album_data = album.serializable_hash
+      album_data['artist'] = album.artist
+      if current_user
+        album_data['can_edit'] = (album.uploader == current_user || current_user.admin?)
+      else
+        album_data['can_edit'] = false
+      end
+      render json: { album: album_data }, adapter: :json
     else
       render json: { error: 'Album not found' }, status: 404
     end
