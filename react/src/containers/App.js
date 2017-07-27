@@ -9,6 +9,7 @@ import {
 import SideNav from '../components/SideNav'
 import AlbumsIndexContainer from './AlbumsIndexContainer';
 import AlbumFormContainer from './AlbumFormContainer';
+import EditAlbumFormContainer from './EditAlbumFormContainer';
 import ReviewFormContainer from './ReviewFormContainer';
 import AlbumShow from './AlbumShow';
 
@@ -32,6 +33,7 @@ const App = ({ }) => {
             <Route exact path='/' component={Home} />
             <Route exact path='/albums' component={AlbumsIndexContainer} />
             <Route exact path='/albums/new' component={AlbumFormContainer} />
+            <Route exact path='/albums/:id/edit' component={EditAlbumFormContainer} />
             <Route exact path='/albums/:id' component={AlbumShow} />
             <Route path='/albums/:id/reviews/new' component={ReviewFormContainer} />
           </Switch>

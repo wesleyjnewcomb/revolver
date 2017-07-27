@@ -11,7 +11,7 @@ import months from '../monthAbbreviations';
 const yearMin = 1900;
 const yearMax = 3000;
 
-class AlbumFormContainer extends Component{
+class EditAlbumFormContainer extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +26,32 @@ class AlbumFormContainer extends Component{
     this.handleSubmitForm = this.handleSubmitForm.bind(this)
   }
 
+  componentDidMount() {
+    fetch(`/api/v1/albums/${this.props.match.params.id}`, {
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        let errorMessage = `${response.status} (${response.statusText})`;
+        let error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .then(response => {
+      this.setState({
+        title: response.album.title,
+        artist: response.album.artist.name,
+        year_released: response.album.year_released,
+        month_released: response.album.month_released
+      });
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`))
+  }
+
   handleTextFieldChange(event) {
+    event.preventDefault();
     this.setState({ [event.target.name]: event.target.value })
   }
 
@@ -75,11 +100,10 @@ class AlbumFormContainer extends Component{
       return false;
     }
 
-    this.newAlbumSubmit()
-    this.handleClearForm(event)
+    this.editAlbumSubmit();
   }
 
-  newAlbumSubmit(event) {
+  editAlbumSubmit() {
     let payload = {
       album: {
         title: this.state.title,
@@ -88,8 +112,8 @@ class AlbumFormContainer extends Component{
         artist_name: this.state.artist
       }
     };
-    fetch('/api/v1/albums', {
-      method: 'POST',
+    fetch(`/api/v1/albums/${this.props.match.params.id}`, {
+      method: 'PATCH',
       credentials: 'same-origin',
       body: JSON.stringify(payload)
     }).then(response => {
@@ -124,12 +148,11 @@ class AlbumFormContainer extends Component{
     if (this.state.newAlbum) {
       newAlbumLink = (
         <div className='panel callout text-center'>
-          Your new album,&nbsp;
           <Link to={`/albums/${this.state.newAlbum.id}`}>
-            {this.state.newAlbum.title}
-          </Link>
-          , has been added!
-        </div>
+          {this.state.newAlbum.title}
+        </Link>
+        &nbsp;has been updated!
+      </div>
       )
     }
 
@@ -137,7 +160,7 @@ class AlbumFormContainer extends Component{
       <div className='album-form'>
         {newAlbumLink}
         <div className="panel small-6 columns small-centered">
-          <h2>New Album</h2>
+          <h2>Edit Album</h2>
           <form onSubmit={this.handleSubmitForm}>
             <div className='row small-12 columns'>
               <TextField
@@ -191,4 +214,4 @@ class AlbumFormContainer extends Component{
   }
 }
 
-export default AlbumFormContainer;
+export default EditAlbumFormContainer;
