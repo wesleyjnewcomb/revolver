@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    binding.pry
    @user = User.find(params[:id])
 
    if @user.destroy

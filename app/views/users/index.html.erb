@@ -1,13 +1,19 @@
-<h1> Testing </h1>
 
-<% @users.each do |user| %>
+<div class="text-center">
+  <div class="small-6 columns small-centered">
+    <div class="panel secondary small-12">
+    <h1 class=""> Users </h1> <br>
 
-<div>
-<%=user.username %>
-<%= link_to "delete user", user, method: :delete, data: { confirm: "Are you sure?" } %>
+    <% @users.each do |user| %>
 
+    <div>
+      <%=user.username %>
+      <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/users/<%=user.id%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+    </div>
+
+    <%end%> <br>
+
+    </div>
+    <span><%= link_to "Back", root_path %> </span>
+ </div>
 </div>
-
-  <%end%> <br>
-
-  <%= link_to "Back", root_path %>
