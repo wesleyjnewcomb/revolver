@@ -8,7 +8,7 @@ Revolver is a web application for sharing album reviews. Utilizing ‘Test Drive
 
 Our team created this application as a fun demonstration of our RoR and ReactJS skills, and also as the fulfillment of an assignment.
 
-Revolver has been deployed to Heroku: (address)
+Revolver has been deployed to Heroku: http://revolver-lagp.herokuapp.com/
 
 ## Technologies:
 
