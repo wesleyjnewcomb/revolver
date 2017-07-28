@@ -164,6 +164,14 @@ class EditAlbumFormContainer extends Component{
           <form onSubmit={this.handleSubmitForm}>
             <div className='row small-12 columns'>
               <TextField
+                name='artist'
+                label='Artist*'
+                content={this.state.artist}
+                handleChange={this.handleTextFieldChange}
+              />
+            </div>
+            <div className='row small-12 columns'>
+              <TextField
                 name='title'
                 label='Title*'
                 content={this.state.title}
@@ -190,14 +198,6 @@ class EditAlbumFormContainer extends Component{
                   max={yearMax}
                 />
               </div>
-            </div>
-            <div className='row small-12 columns'>
-              <TextField
-                name='artist'
-                label='Artist*'
-                content={this.state.artist}
-                handleChange={this.handleTextFieldChange}
-              />
             </div>
             <div className='row small-12 columns'>
               {errors}
