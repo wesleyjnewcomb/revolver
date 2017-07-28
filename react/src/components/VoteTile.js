@@ -57,6 +57,9 @@ class VoteTile extends Component {
       } else if (this.state.userVote === -1) {
         downCssClass += ' highlighted-arrow'
       }
+    } else {
+      upCssClass += ' invisible-arrow'
+      downCssClass += ' invisible-arrow'
     }
 
     return(
