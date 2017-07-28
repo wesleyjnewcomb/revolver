@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :albums, foreign_key: "uploader_id"
+  has_many :reviews, dependent: :destroy
 
   enum role: [ :user, :admin ]
 
@@ -20,5 +21,4 @@ class User < ApplicationRecord
   def admin?
     role == 'admin'
   end
-
 end
