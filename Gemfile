@@ -30,7 +30,6 @@ group :development, :test do
   gem 'shoulda'
   gem 'shoulda-matchers', require: false
   gem 'valid_attribute'
-  gem 'launchy'
   gem 'faker'
   gem 'dotenv-rails'
 end
