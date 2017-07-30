@@ -1,3 +1,3 @@
-class ReviewSerializer < ActiveModel::Serializer
+class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :email, :avatar
 end
